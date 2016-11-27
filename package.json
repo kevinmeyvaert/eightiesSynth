@@ -1,0 +1,60 @@
+{
+  "name": "EXW-20162017-04",
+  "version": "0.1.0",
+  "scripts": {
+    "development": "npm run clean && nodemon . & NODE_ENV=development webpack --watch",
+    "start": "npm run serve",
+    "serve": "forever .",
+    "clean": "rimraf ./server/public/",
+    "production": "npm run clean && NODE_ENV=production webpack -p",
+    "test": "jest --coverage"
+  },
+  "main": "server/index.js",
+  "engines": {
+    "node": "6.7.0"
+  },
+  "dependencies": {
+    "dotenv": "^2.0.0",
+    "forever": "^0.15.2",
+    "glob": "^7.1.1",
+    "lodash": "^4.16.4",
+    "joi": "^9.2.0",
+    "joi-objectid": "^2.0.0",
+    "hapi": "^15.1.1",
+    "inert": "^4.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-lodash": "^3.2.9",
+    "babel-plugin-transform-react-jsx-source": "^6.9.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.2.10",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "copy-webpack-plugin": "^3.0.1",
+    "css-loader": "^0.25.0",
+    "eslint": "^3.7.1",
+    "eslint-config-devine": "^1.5.0",
+    "eslint-loader": "^1.5.0",
+    "extract-text-webpack-plugin": "beta",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
+    "image-webpack-loader": "^3.0.0",
+    "jest": "^16.0.2",
+    "nodemon": "^1.11.0",
+    "postcss-cssnext": "^2.8.0",
+    "postcss-loader": "^1.0.0",
+    "postcss-reporter": "^1.4.1",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-router": "next",
+    "rimraf": "^2.5.4",
+    "style-loader": "^0.13.1",
+    "stylelint": "^7.5.0",
+    "stylelint-config-devine": "^1.0.0",
+    "url-loader": "^0.5.7",
+    "webpack": "beta",
+    "webpack-config-htmls": "^1.0.1"
+  }
+}
