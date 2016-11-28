@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react';
 
-const Key = ({note, color}) => {
+const Key = ({id, note, color}) => {
   return (
-    <div className={`key ${color} ${note}`}>
+    <div className={`key ${color} ${id}`}>
       {note}
     </div>
   );
@@ -10,7 +10,8 @@ const Key = ({note, color}) => {
 
 Key.propTypes = {
   note: PropTypes.string,
-  color: PropTypes.string
+  color: PropTypes.string,
+  id: PropTypes.number
 };
 
 export default Key;

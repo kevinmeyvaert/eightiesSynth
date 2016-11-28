@@ -41,7 +41,7 @@ class App extends Component {
   render() {
     return (
         <main>
-          {Keylayout.map((k, i) => <Key {...k} key={i} />)}
+          {Keylayout.map((k, i) => <Key {...k} key={i} id={i} />)}
         </main>
     );
   }
