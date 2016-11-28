@@ -1,19 +1,27 @@
-import React from 'react';
-import {Match, BrowserRouter as Router} from 'react-router';
+import React, {Component} from 'react';
+import WebMidi from 'webmidi';
 
-import {Home} from '../pages/';
+class App extends Component {
 
-const App = () => {
-  return (
-    <Router>
-      <main>
-        <Match
-          exactly pattern='/'
-          render={Home}
-        />
-      </main>
-    </Router>
-  );
-};
+  componentDidMount() {
+    WebMidi.enable(function (err) {
+
+      if (err) {
+        console.log(`WebMidi could not be enabled.`, err);
+      } else {
+        console.log(`WebMidi enabled!`);
+      }
+
+    });
+  }
+
+  render() {
+    return (
+        <main>
+          HALLO KUT
+        </main>
+    );
+  }
+}
 
 export default App;
