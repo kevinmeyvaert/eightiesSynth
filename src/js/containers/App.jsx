@@ -29,12 +29,12 @@ class App extends Component {
 
   handlePlayNote(e) {
     console.log(`Received 'noteon' message (${  e.note.name  }${e.note.octave  }).`);
-    document.querySelector(`.${  e.note.name  }${e.note.octave  }`).classList.add(`pushed`);
+    document.querySelector(`.nr-${e.note.number}`).classList.add(`pushed`);
   }
 
   handleReleaseNote(e) {
     console.log(`Received 'noteoff' message (${  e.note.name  }${e.note.octave  }).`);
-    document.querySelector(`.${  e.note.name  }${e.note.octave  }`).classList.remove(`pushed`);
+    document.querySelector(`.nr-${e.note.number}`).classList.remove(`pushed`);
   }
 
 
