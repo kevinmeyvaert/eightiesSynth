@@ -6,6 +6,10 @@ const Keylayout = [
   {
     note: `D0`,
     color: `white`
+  },
+  {
+    note: `E0`,
+    color: `white`
   }
 ];
 
