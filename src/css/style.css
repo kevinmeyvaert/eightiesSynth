@@ -11,6 +11,7 @@ body {
 .key {
   width: 5%;
   height: 200px;
+  float: left;
 }
 
 .white {

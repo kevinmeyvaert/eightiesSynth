@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import WebMidi from 'webmidi';
 
 import Key from '../components/key';
+import Keylayout from '../const/keylayout';
 
 class App extends Component {
 
@@ -36,11 +37,11 @@ class App extends Component {
     document.querySelector(`.${  e.note.name  }${e.note.octave  }`).classList.remove(`pushed`);
   }
 
+
   render() {
     return (
         <main>
-          Super C00le App van KEVIN en ook een beetje van Anthony.
-          <Key color={`white`} note={`C0`} />
+          {Keylayout.map((k, i) => <Key {...k} key={i} />)}
         </main>
     );
   }
