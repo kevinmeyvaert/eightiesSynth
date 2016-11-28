@@ -4,4 +4,19 @@ body {
   font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
   margin: 2rem;
+  background-color: #000;
+  color: 0;
+}
+
+.key {
+  width: 5%;
+  height: 200px;
+}
+
+.white {
+  background-color: #FFF;
+}
+
+.pushed {
+  background-color: red;
 }
