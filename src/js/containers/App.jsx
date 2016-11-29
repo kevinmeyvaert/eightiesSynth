@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import WebMidi from 'webmidi';
+import Tone from 'tone';
 
 import Key from '../components/key';
 import Keylayout from '../const/keylayout';
@@ -34,6 +35,19 @@ class App extends Component {
   handlePlayNote(e) {
     console.log(`Received 'noteon' message (${  e.note.name  }${e.note.octave  }).`);
     document.querySelector(`.nr-${e.note.number}`).classList.add(`pushed`);
+    const synth = new Tone.Synth({
+      oscillator: {
+        type: `pwm`,
+        modulationFrequency: 0.2
+      },
+      envelope: {
+        attack: 0.02,
+        decay: 0.1,
+        sustain: 0.2,
+        release: 0.9,
+      }
+    }).toMaster();
+    synth.triggerAttackRelease(`${e.note.name}${e.note.octave}`, `2n`);
   }
 
   handleReleaseNote(e) {
