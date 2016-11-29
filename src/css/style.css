@@ -4,4 +4,35 @@ body {
   font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
   margin: 2rem;
+  background-color: #000;
+  color: 0;
+}
+
+.key {
+  width: 5%;
+  height: 200px;
+  position: relative;
+  float: left;
+}
+
+.white {
+  background-color: #FFF;
+  border-right: 2px solid #000;
+}
+
+.black {
+  background-color: #000;
+  height: 100px;
+  color: #FFF;
+  width: 4%;
+  z-index: 10;
+  margin-left: -1%;
+}
+
+.black + .white {
+  margin-left: -3%;
+}
+
+.pushed {
+  background-color: red;
 }
