@@ -18,13 +18,17 @@ class App extends Component {
   }
 
   initMidiControls() {
-    const input = WebMidi.getInputByName(`Keystation Mini 32`);
-    input.addListener(`noteon`, `all`, e => {
-      this.handlePlayNote(e);
-    });
-    input.addListener(`noteoff`, `all`, e => {
-      this.handleReleaseNote(e);
-    });
+    if (WebMidi.getInputByName(`Keystation Mini 32`)) {
+      const input = WebMidi.getInputByName(`Keystation Mini 32`);
+      input.addListener(`noteon`, `all`, e => {
+        this.handlePlayNote(e);
+      });
+      input.addListener(`noteoff`, `all`, e => {
+        this.handleReleaseNote(e);
+      });
+    } else {
+      console.log(`Keystation Mini 32 was not found! :(`);
+    }
   }
 
   handlePlayNote(e) {
