@@ -18,7 +18,11 @@ module.exports.register = (server, options, next) => {
     users.push(user);
 
     socket.on(`noteplayed`, note => {
-      socket.broadcast.emit(`playnote`, note);
+      io.emit(`playnote`, note);
+    });
+
+    socket.on(`notereleased`, note => {
+      io.emit(`releasenote`, note);
     });
 
   });
