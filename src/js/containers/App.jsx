@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
 import WebMidi from 'webmidi';
 import Tone from 'tone';
+import io from 'socket.io-client';
 
 import Key from '../components/key';
 import Keylayout from '../const/keylayout';
+import Synthpresets from '../const/synthpresets';
 
 class App extends Component {
 
   componentDidMount() {
+    this.socket = io(`/`);
+    this.socket.on(`playnote`, this.handleWSPlayNote);
     WebMidi.enable(err => {
       if (err) {
         console.log(`WebMidi could not be enabled.`, err);
@@ -16,6 +20,10 @@ class App extends Component {
         this.initMidiControls();
       }
     });
+  }
+
+  handleWSPlayNote = note => {
+    console.log(`iemand anders speelt ${note}`);
   }
 
   initMidiControls() {
@@ -35,19 +43,11 @@ class App extends Component {
   handlePlayNote(e) {
     console.log(`Received 'noteon' message (${  e.note.name  }${e.note.octave  }).`);
     document.querySelector(`.nr-${e.note.number}`).classList.add(`pushed`);
-    const synth = new Tone.Synth({
-      oscillator: {
-        type: `pwm`,
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.9,
-      }
-    }).toMaster();
-    synth.triggerAttackRelease(`${e.note.name}${e.note.octave}`, `2n`);
+    const reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
+    const synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+    synth.triggerAttackRelease(`${e.note.name}${e.note.octave}`, `8n`);
+    // note played - send out socket with note
+    this.socket.emit(`noteplayed`, `${e.note.name}${e.note.octave}`);
   }
 
   handleReleaseNote(e) {
