@@ -9,10 +9,16 @@ import Synthpresets from '../const/synthpresets';
 
 class App extends Component {
 
+  state = {
+    user: []
+  }
+
   componentDidMount() {
     this.socket = io(`/`);
+    this.socket.on(`init`, this.handleWSInit);
     this.socket.on(`playnote`, this.handleWSPlayNote);
     this.socket.on(`releasenote`, this.handleWSReleaseNote);
+
     WebMidi.enable(err => {
       if (err) {
         console.log(`WebMidi could not be enabled.`, err);
@@ -23,19 +29,6 @@ class App extends Component {
     });
   }
 
-  handleWSPlayNote = note => {
-    document.querySelector(`.nr-${note.note.number}`).classList.add(`pushed`);
-    const reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
-    const synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
-    synth.triggerAttackRelease(`${note.note.name}${note.note.octave}`, `8n`);
-    console.log(`audio triggered by socket`);
-  }
-
-  handleWSReleaseNote = note => {
-    console.log(`Received 'noteoff' message (${  note.note.name  }${note.note.octave  }).`);
-    document.querySelector(`.nr-${note.note.number}`).classList.remove(`pushed`);
-  }
-
   initMidiControls() {
     if (WebMidi.getInputByName(`Keystation Mini 32`)) {
       const input = WebMidi.getInputByName(`Keystation Mini 32`);
@@ -44,11 +37,35 @@ class App extends Component {
         this.socket.emit(`noteplayed`, e);
       });
       input.addListener(`noteoff`, `all`, e => {
+        console.log(`Received 'noteoff' message (${  e.note.name  }${e.note.octave  }).`);
         this.socket.emit(`notereleased`, e);
       });
     } else {
       console.log(`Keystation Mini 32 was not found! :(`);
     }
+  }
+
+  handleWSInit = user => {
+    this.setState({user});
+  }
+
+  handleWSPlayNote = note => {
+    const {user} = this.state;
+    // show feedback
+    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${user.color}`;
+
+    // initiate FM synth + fx
+    const reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
+    const synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+
+    // trigger played note
+    synth.triggerAttackRelease(`${note.note.name}${note.note.octave}`, `8n`);
+    console.log(`audio triggered by socket`);
+  }
+
+  handleWSReleaseNote = note => {
+    // hide feedback
+    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = null;
   }
 
   render() {

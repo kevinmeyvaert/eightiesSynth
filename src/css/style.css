@@ -32,7 +32,3 @@ body {
 .black + .white {
   margin-left: -3%;
 }
-
-.pushed {
-  background-color: red;
-}
