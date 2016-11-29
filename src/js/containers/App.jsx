@@ -4,6 +4,7 @@ import Tone from 'tone';
 
 import Key from '../components/key';
 import Keylayout from '../const/keylayout';
+import Synthpresets from '../const/synthpresets';
 
 class App extends Component {
 
@@ -35,19 +36,9 @@ class App extends Component {
   handlePlayNote(e) {
     console.log(`Received 'noteon' message (${  e.note.name  }${e.note.octave  }).`);
     document.querySelector(`.nr-${e.note.number}`).classList.add(`pushed`);
-    const synth = new Tone.Synth({
-      oscillator: {
-        type: `pwm`,
-        modulationFrequency: 0.2
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.1,
-        sustain: 0.2,
-        release: 0.9,
-      }
-    }).toMaster();
-    synth.triggerAttackRelease(`${e.note.name}${e.note.octave}`, `2n`);
+    const reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
+    const synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+    synth.triggerAttackRelease(`${e.note.name}${e.note.octave}`, `8n`);
   }
 
   handleReleaseNote(e) {
