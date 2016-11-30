@@ -17,7 +17,8 @@
     "production": {
       "plugins": [
         "lodash",
-        "transform-react-remove-prop-types"
+        "transform-react-remove-prop-types",
+        "transform-flow-strip-types"
       ]
     }
 
