@@ -10,12 +10,14 @@ import Synthpresets from '../const/synthpresets';
 class App extends Component {
 
   state = {
-    user: []
+    users: []
   }
 
   componentDidMount() {
     this.socket = io(`/`);
     this.socket.on(`init`, this.handleWSInit);
+    this.socket.on(`leave`, this.handleWSLeave);
+    this.socket.on(`join`, this.handleWSJoin);
     this.socket.on(`playnote`, this.handleWSPlayNote);
     this.socket.on(`releasenote`, this.handleWSReleaseNote);
 
@@ -45,14 +47,36 @@ class App extends Component {
     }
   }
 
-  handleWSInit = user => {
-    this.setState({user});
+  handleWSInit = users => {
+    const {id: socketId} = this.socket;
+
+    users = users.map(u => {
+      if (u.socketId === socketId) u.isMe = true;
+      return u;
+    });
+
+    this.setState({users});
   }
 
-  handleWSPlayNote = note => {
-    const {user} = this.state;
+  handleWSJoin = user => {
+    const {users} = this.state;
+    users.push(user);
+    this.setState({users});
+  }
+
+  handleWSLeave = socketId => {
+    let {users} = this.state;
+    users = users.filter(u => u.socketId !== socketId);
+    this.setState({users});
+  }
+
+  handleWSPlayNote = ({note, socketId}) => {
+    const {users} = this.state;
+    console.log({users});
+    const userPlayed = users.filter(u => u.socketId === socketId);
+    console.log(userPlayed);
     // show feedback
-    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${user.color}`;
+    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${userPlayed[0].color}`;
 
     // initiate FM synth + fx
     const reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
