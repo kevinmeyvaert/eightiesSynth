@@ -70,7 +70,7 @@ class App extends Component {
     this.setState({users});
   }
 
-  handleWSPlayNote = ({note, socketId}: Object) => {
+  handleWSPlayNote = ({note, socketId}) => {
     const {users} = this.state;
     console.log({users});
     const userPlayed = users.filter(u => u.socketId === socketId);
@@ -79,8 +79,8 @@ class App extends Component {
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${userPlayed[0].color}`;
 
     // initiate FM synth + fx
-    const reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
-    const synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+    const reverb: Object = new Tone.JCReverb(0.4).connect(Tone.Master);
+    const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
 
     // trigger played note
     synth.triggerAttackRelease(`${note.note.name}${note.note.octave}`, `8n`);
