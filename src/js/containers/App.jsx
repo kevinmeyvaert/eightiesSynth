@@ -47,7 +47,7 @@ class App extends Component {
     }
   }
 
-  handleWSInit = users => {
+  handleWSInit = (users: Object) => {
     const {id: socketId} = this.socket;
 
     users = users.map(u => {
@@ -58,19 +58,19 @@ class App extends Component {
     this.setState({users});
   }
 
-  handleWSJoin = user => {
+  handleWSJoin = (user: Object) => {
     const {users} = this.state;
     users.push(user);
     this.setState({users});
   }
 
-  handleWSLeave = socketId => {
+  handleWSLeave = (socketId: String) => {
     let {users} = this.state;
     users = users.filter(u => u.socketId !== socketId);
     this.setState({users});
   }
 
-  handleWSPlayNote = ({note, socketId}) => {
+  handleWSPlayNote = ({note, socketId}: Object) => {
     const {users} = this.state;
     console.log({users});
     const userPlayed = users.filter(u => u.socketId === socketId);
@@ -87,7 +87,7 @@ class App extends Component {
     console.log(`audio triggered by socket`);
   }
 
-  handleWSReleaseNote = note => {
+  handleWSReleaseNote = (note: Object) => {
     // hide feedback
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = null;
   }
