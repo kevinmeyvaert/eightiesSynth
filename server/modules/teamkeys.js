@@ -1,9 +1,10 @@
+const randomColor = require(`../lib/randomColor.js`);
+
 module.exports.register = (server, options, next) => {
 
   const io = require(`socket.io`)(server.listener);
 
-  const users = [];
-  const maxId = 0;
+  let users = [];
 
   io.on(`connection`, socket => {
 
@@ -12,13 +13,23 @@ module.exports.register = (server, options, next) => {
 
     const user = {
       socketId,
-      nickname: `user${maxId}`
+      color: randomColor.generate()
     };
 
     users.push(user);
+    console.log(users);
+
+    socket.emit(`init`, users);
+    socket.broadcast.emit(`join`, user);
+
+    socket.on(`disconnect`, () => {
+      users = users.filter(u => u.socketId !== socketId);
+      socket.broadcast.emit(`leave`, socketId);
+      //iedereen behalve zichtzelf : broadcast
+    });
 
     socket.on(`noteplayed`, note => {
-      io.emit(`playnote`, note);
+      io.emit(`playnote`, {note, socketId});
     });
 
     socket.on(`notereleased`, note => {
