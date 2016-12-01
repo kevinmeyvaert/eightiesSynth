@@ -1,11 +1,46 @@
 @import 'reset';
 
+html {
+  height: 100%;
+}
+
 body {
+  background: url('../assets/bg.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
   font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
-  margin: 2rem;
-  background-color: #000;
   color: 0;
+}
+
+.container {
+  perspective: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.logo {
+  background: url('../assets/logo.png') no-repeat center center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 200;
+}
+
+.grain {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  opacity: .15;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .key {
@@ -31,4 +66,16 @@ body {
 
 .black + .white {
   margin-left: -3%;
+}
+
+/* CHAT */
+
+.chat-wrapper {
+  width: 300px;
+  height: 100%;
+  background-color: rgba(53, 9, 53, 0.7);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
 }

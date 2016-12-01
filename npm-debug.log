@@ -1,0 +1,48 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/Anthony/.nvm/versions/node/v6.7.0/bin/node',
+1 verbose cli   '/Users/Anthony/.nvm/versions/node/v6.7.0/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'production' ]
+2 info using npm@3.10.3
+3 info using node@v6.7.0
+4 verbose run-script [ 'preproduction', 'production', 'postproduction' ]
+5 info lifecycle EXW-20162017-04@0.1.0~preproduction: EXW-20162017-04@0.1.0
+6 silly lifecycle EXW-20162017-04@0.1.0~preproduction: no script for preproduction, continuing
+7 info lifecycle EXW-20162017-04@0.1.0~production: EXW-20162017-04@0.1.0
+8 verbose lifecycle EXW-20162017-04@0.1.0~production: unsafe-perm in lifecycle true
+9 verbose lifecycle EXW-20162017-04@0.1.0~production: PATH: /Users/Anthony/.nvm/versions/node/v6.7.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/Anthony/Documents/School/EXW/EXW-Mathrandom/EXW-20162017-04/node_modules/.bin:/Users/Anthony/.nvm/versions/node/v6.7.0/bin:/Users/Anthony/.nvm/versions/node/v6.7.0/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+10 verbose lifecycle EXW-20162017-04@0.1.0~production: CWD: /Users/Anthony/Documents/School/EXW/EXW-Mathrandom/EXW-20162017-04
+11 silly lifecycle EXW-20162017-04@0.1.0~production: Args: [ '-c', 'npm run clean && NODE_ENV=production webpack -p' ]
+12 silly lifecycle EXW-20162017-04@0.1.0~production: Returned: code: 2  signal: null
+13 info lifecycle EXW-20162017-04@0.1.0~production: Failed to exec production script
+14 verbose stack Error: EXW-20162017-04@0.1.0 production: `npm run clean && NODE_ENV=production webpack -p`
+14 verbose stack Exit status 2
+14 verbose stack     at EventEmitter.<anonymous> (/Users/Anthony/.nvm/versions/node/v6.7.0/lib/node_modules/npm/lib/utils/lifecycle.js:242:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (/Users/Anthony/.nvm/versions/node/v6.7.0/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:877:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+15 verbose pkgid EXW-20162017-04@0.1.0
+16 verbose cwd /Users/Anthony/Documents/School/EXW/EXW-Mathrandom/EXW-20162017-04
+17 error Darwin 15.6.0
+18 error argv "/Users/Anthony/.nvm/versions/node/v6.7.0/bin/node" "/Users/Anthony/.nvm/versions/node/v6.7.0/bin/npm" "run" "production"
+19 error node v6.7.0
+20 error npm  v3.10.3
+21 error code ELIFECYCLE
+22 error EXW-20162017-04@0.1.0 production: `npm run clean && NODE_ENV=production webpack -p`
+22 error Exit status 2
+23 error Failed at the EXW-20162017-04@0.1.0 production script 'npm run clean && NODE_ENV=production webpack -p'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the EXW-20162017-04 package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     npm run clean && NODE_ENV=production webpack -p
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs EXW-20162017-04
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls EXW-20162017-04
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
