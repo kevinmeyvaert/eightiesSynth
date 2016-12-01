@@ -78,6 +78,15 @@ class App extends Component {
     // show feedback
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${userPlayed[0].color}`;
 
+    // check what color the pressed key has
+    const colorKeyPressed = Keylayout.filter(u => u.number === note.note.number);
+    // animate the pressed key
+    if (colorKeyPressed[0].color === `white`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-7deg)`;
+    } else if (colorKeyPressed[0].color === `black`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-5deg) translateZ(35px)`;
+    }
+
     // initiate FM synth + fx
     const reverb: Object = new Tone.JCReverb(0.4).connect(Tone.Master);
     const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
@@ -90,6 +99,14 @@ class App extends Component {
   handleWSReleaseNote = (note: Object) => {
     // hide feedback
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = null;
+    // check what color the released key has
+    const colorKeyPressed = Keylayout.filter(u => u.number === note.note.number);
+    // animate the released key
+    if (colorKeyPressed[0].color === `white`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg)`;
+    } if (colorKeyPressed[0].color === `black`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg) translateZ(35px)`;
+    }
   }
 
   render() {
