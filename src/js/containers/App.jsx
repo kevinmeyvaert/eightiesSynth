@@ -94,9 +94,11 @@ class App extends Component {
 
   render() {
     return (
-        <main>
+      <div className='piano-wrapper'>
+        <div className='piano'>
           {Keylayout.map((k, i) => <Key {...k} key={i} id={i} />)}
-        </main>
+        </div>
+      </div>
     );
   }
 }
