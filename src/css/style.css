@@ -2,15 +2,54 @@
 
 html {
   height: 100%;
+<<<<<<< HEAD
   overflow: hidden;
+=======
+>>>>>>> 5384328c6b8d11ec9811d853180571f6fae6b62a
 }
 
 body {
+  background: url('../assets/bg.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
   font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
+<<<<<<< HEAD
   margin: 2rem;
   background-color: #0A1A3A;
+=======
+>>>>>>> 5384328c6b8d11ec9811d853180571f6fae6b62a
   color: 0;
+}
+
+.container {
+  perspective: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.logo {
+  background: url('../assets/logo.png') no-repeat center center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 200;
+}
+
+.grain {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  opacity: .15;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .key {
@@ -38,6 +77,7 @@ body {
   margin-left: -3%;
 }
 
+<<<<<<< HEAD
 .grain {
   max-width: none;
   width: 2200px;
@@ -49,4 +89,16 @@ body {
   z-index: 2;
   opacity: 0.3;
   pointer-events: none;
+=======
+/* CHAT */
+
+.chat-wrapper {
+  width: 300px;
+  height: 100%;
+  background-color: rgba(53, 9, 53, 0.7);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+>>>>>>> 5384328c6b8d11ec9811d853180571f6fae6b62a
 }
