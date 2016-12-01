@@ -1,10 +1,15 @@
 @import 'reset';
 
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
   margin: 2rem;
-  background-color: #000;
+  background-color: #0A1A3A;
   color: 0;
 }
 
@@ -31,4 +36,17 @@ body {
 
 .black + .white {
   margin-left: -3%;
+}
+
+.grain {
+  max-width: none;
+  width: 2200px;
+  height: 1125px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  opacity: 0.3;
+  pointer-events: none;
 }
