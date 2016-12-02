@@ -72,14 +72,12 @@ class App extends Component {
 
   handleWSPlayNote = ({note, socketId}) => {
     const {users} = this.state;
-    console.log({users});
-    const userPlayed = users.filter(u => u.socketId === socketId);
-    console.log(userPlayed);
+    const userPlayed: Object = users.filter(u => u.socketId === socketId);
     // show feedback
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${userPlayed[0].color}`;
 
     // check what color the pressed key has
-    const colorKeyPressed = Keylayout.filter(u => u.number === note.note.number);
+    const colorKeyPressed: Object = Keylayout.filter(u => u.number === note.note.number);
     // animate the pressed key
     if (colorKeyPressed[0].color === `white`) {
       document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-7deg)`;
@@ -100,7 +98,7 @@ class App extends Component {
     // hide feedback
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = null;
     // check what color the released key has
-    const colorKeyPressed = Keylayout.filter(u => u.number === note.note.number);
+    const colorKeyPressed: Object = Keylayout.filter(u => u.number === note.note.number);
     // animate the released key
     if (colorKeyPressed[0].color === `white`) {
       document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg)`;
