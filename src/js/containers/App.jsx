@@ -84,7 +84,7 @@ class App extends Component {
     if (colorKeyPressed[0].color === `white`) {
       document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-7deg)`;
     } else if (colorKeyPressed[0].color === `black`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-5deg) translateZ(35px)`;
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-5deg) translateZ(20px)`;
     }
 
     // initiate FM synth + fx
@@ -105,7 +105,7 @@ class App extends Component {
     if (colorKeyPressed[0].color === `white`) {
       document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg)`;
     } if (colorKeyPressed[0].color === `black`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg) translateZ(35px)`;
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg) translateZ(20px)`;
     }
   }
 
