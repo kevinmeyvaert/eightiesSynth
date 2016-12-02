@@ -1,27 +1,31 @@
 {
-
   "presets": [
-    ["es2015", { "modules": false, "loose": true }],
+    [
+      "es2015",
+      {
+        "modules": false,
+        "loose": true
+      }
+    ],
     "stage-0",
     "react"
   ],
-
+  "plugins": [
+    [
+      "transform-flow-strip-types"
+    ]
+  ],
   "env": {
-
     "development": {
       "plugins": [
         "transform-react-jsx-source"
       ]
     },
-
     "production": {
       "plugins": [
         "lodash",
-        "transform-react-remove-prop-types",
-        "transform-flow-strip-types"
+        "transform-react-remove-prop-types"
       ]
     }
-
   }
-
 }
