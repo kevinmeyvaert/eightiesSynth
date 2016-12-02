@@ -97,6 +97,10 @@ body {
   margin: 20px 0;
 }
 
+.onlineusers {
+  display: inline;
+}
+
 .logo {
   background: url('/assets/logo.svg') no-repeat center center;
   top: 50px;
