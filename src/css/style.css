@@ -1,11 +1,51 @@
 @import 'reset';
 
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
+  background: url('../assets/bg.jpg') no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
   font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
   margin: 2rem;
-  background-color: #000;
-  color: 0;
+  background-color: #0A1A3A;
+}
+
+.container {
+  perspective: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.logo {
+  background: url('../assets/logo.png') no-repeat center center;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 442px;
+  height: 346px;
+  position: absolute;
+  z-index: 200;
+}
+
+.grain {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 15;
+  opacity: .2;
+  pointer-events: none;
+  overflow: hidden;
 }
 
 .key {
@@ -15,20 +55,164 @@ body {
   float: left;
 }
 
+.black + .white {
+  margin-left: -3%;
+}
+
+/* CHAT */
+
+.chat-wrapper {
+  width: 300px;
+  height: 100%;
+  background-color: rgba(53, 9, 53, 0.7);
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 100;
+}
+
+/* PIANO */
+
+.piano-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  perspective: 1000px;
+}
+
+.piano {
+  margin: 400px auto 0 auto;
+  height: 400px;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  transform-origin: bottom;
+  transform-style: preserve-3d;
+  transform: rotateX(40deg);
+  animation: piano 0.6s 0.8s ease;
+  animation-fill-mode: backwards;
+  transition: transform 0.3s ease;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    /* background: darken(#444, 3%); */
+    background-clip: content-box;
+    top: 0;
+    left: 6px;
+    right: 6px;
+    bottom: 0;
+    transform: translateZ(-76px);
+    box-shadow: 0 0 40px fade(#444, 40%), 0 0 0 100px white;
+  }
+
+  &::after {
+    left: 25px;
+    right: 25px;
+    bottom: auto;
+    height: 79px;
+    transform-origin: top;
+    transform: rotateX(-90deg);
+  }
+}
+
 .white {
-  background-color: #FFF;
-  border-right: 2px solid #000;
+  /* top */
+  background-color: #edefee;
+  background-clip: content-box;
+  margin: 0 2px;
+  outline: none;
+  transform-origin: top;
+  transform-style: preserve-3d;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:active {
+    transform: rotateX(-7deg);
+  }
+
+  &:hover {
+      background-color: #FFF;
+
+      &::before {
+          background: #FFF;
+      }
+  }
+
+  /* 3D front key effect */
+  &::before,
+  &::after {
+    /* height stukje */
+    content: '';
+    background: #ccc;
+    position: absolute;
+    left: 0;
+    transition: background 0.3s ease;
+  }
+
+  /* 3D front key effect */
+  &::after {
+    top: 100%;
+    width: 100%;
+    height: 36px; /* hoogte van de key */
+    transform-origin: top;
+    transform: rotateX(-90deg);
+  }
 }
 
 .black {
   background-color: #000;
-  height: 100px;
-  color: #FFF;
+  height: 120px;
+  color: #444;
   width: 4%;
   z-index: 10;
   margin-left: -1%;
-}
+  background: lighten(#444, 10%);
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  transform: translateZ(20px);
+  transform-style: preserve-3d;
+  transform-origin: top;
+  transition: background 0.3s ease, transform 0.3s ease;
 
-.black + .white {
-  margin-left: -3%;
+  &:active {
+    transform: rotateX(-5deg) translateZ(20px);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    background: #444;
+    border-top-left-radius: 6px;
+    top: 0;
+    height: 100%;
+    width: 39px;
+    transform-origin: left;
+    left: 1px;
+    transform: rotateY(93deg);
+    box-shadow: inset -50px 0 50px -50px black;
+  }
+
+&::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border-bottom: 60px solid black;
+  height: 0;
+  transform-origin: top;
+  transform: rotateX(-90deg);
+  box-shadow: 0 7px 20px fade(black, 25%),
+              0 3px 5px -2px fade(white, 80%),
+              0 5px,
+              0 20px darken(#444, 2%),
+              0 40px darken(#444, 2%);
+  }
+
+  &:nth-child(-n + 15)::before {
+      left: 99%;
+      transform: rotateY(87deg);
+  }
 }

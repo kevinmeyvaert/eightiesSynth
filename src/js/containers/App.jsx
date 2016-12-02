@@ -70,7 +70,7 @@ class App extends Component {
     this.setState({users});
   }
 
-  handleWSPlayNote = ({note, socketId}: Object) => {
+  handleWSPlayNote = ({note, socketId}) => {
     const {users} = this.state;
     console.log({users});
     const userPlayed = users.filter(u => u.socketId === socketId);
@@ -78,9 +78,18 @@ class App extends Component {
     // show feedback
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${userPlayed[0].color}`;
 
+    // check what color the pressed key has
+    const colorKeyPressed = Keylayout.filter(u => u.number === note.note.number);
+    // animate the pressed key
+    if (colorKeyPressed[0].color === `white`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-7deg)`;
+    } else if (colorKeyPressed[0].color === `black`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-5deg) translateZ(20px)`;
+    }
+
     // initiate FM synth + fx
-    const reverb = new Tone.JCReverb(0.4).connect(Tone.Master);
-    const synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+    const reverb: Object = new Tone.JCReverb(0.4).connect(Tone.Master);
+    const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
 
     // trigger played note
     synth.triggerAttackRelease(`${note.note.name}${note.note.octave}`, `8n`);
@@ -90,13 +99,23 @@ class App extends Component {
   handleWSReleaseNote = (note: Object) => {
     // hide feedback
     document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = null;
+    // check what color the released key has
+    const colorKeyPressed = Keylayout.filter(u => u.number === note.note.number);
+    // animate the released key
+    if (colorKeyPressed[0].color === `white`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg)`;
+    } if (colorKeyPressed[0].color === `black`) {
+      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg) translateZ(20px)`;
+    }
   }
 
   render() {
     return (
-        <main>
+      <div className='piano-wrapper'>
+        <div className='piano'>
           {Keylayout.map((k, i) => <Key {...k} key={i} id={i} />)}
-        </main>
+        </div>
+      </div>
     );
   }
 }
