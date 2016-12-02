@@ -134,6 +134,16 @@ body {
   float: left;
 }
 
+.witplayed {
+  -webkit-transform: rotateX(-7deg);
+          transform: rotateX(-7deg);
+}
+
+.zwartplayed {
+  -webkit-transform: rotateX(-5deg) translateZ(20px) !important;
+          transform: rotateX(-5deg) translateZ(20px) !important;
+}
+
 .black + .white {
   margin-left: -3%;
 }

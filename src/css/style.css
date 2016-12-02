@@ -58,6 +58,14 @@ body {
   float: left;
 }
 
+.witplayed {
+  transform: rotateX(-7deg);
+}
+
+.zwartplayed {
+  transform: rotateX(-5deg) translateZ(20px) !important;
+}
+
 .black + .white {
   margin-left: -3%;
 }

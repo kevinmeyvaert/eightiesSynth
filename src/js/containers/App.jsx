@@ -12,7 +12,8 @@ import Synthpresets from '../const/synthpresets';
 class App extends Component {
 
   state = {
-    users: []
+    users: [],
+    notes: Keylayout
   }
 
   componentDidMount() {
@@ -73,19 +74,17 @@ class App extends Component {
   }
 
   handleWSPlayNote = ({note, socketId}) => {
+    let {notes} = this.state;
     const {users} = this.state;
-    const userPlayed: Object = users.filter(u => u.socketId === socketId);
-    // show feedback
-    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${userPlayed[0].color}`;
 
-    // check what color the pressed key has
-    const colorKeyPressed: Object = Keylayout.filter(u => u.number === note.note.number);
-    // animate the pressed key
-    if (colorKeyPressed[0].color === `white`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-7deg)`;
-    } else if (colorKeyPressed[0].color === `black`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-5deg) translateZ(20px)`;
-    }
+    // who played the note
+    const userPlayed: Object = users.filter(u => u.socketId === socketId);
+
+    notes = notes.map(n => {
+      if (n.number === note.note.number) n.played = true, n.playedby = userPlayed[0].color;
+      return n;
+    });
+    this.setState({notes});
 
     // initiate FM synth + fx
     const reverb: Object = new Tone.JCReverb(0.4).connect(Tone.Master);
@@ -97,26 +96,25 @@ class App extends Component {
   }
 
   handleWSReleaseNote = (note: Object) => {
-    // hide feedback
-    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = null;
-    // check what color the released key has
-    const colorKeyPressed: Object = Keylayout.filter(u => u.number === note.note.number);
-    // animate the released key
-    if (colorKeyPressed[0].color === `white`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg)`;
-    } if (colorKeyPressed[0].color === `black`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg) translateZ(20px)`;
-    }
+    let {notes} = this.state;
+
+    setTimeout(() => {
+      notes = notes.map(n => {
+        if (n.number === note.note.number) n.played = false, n.playedby = ``;
+        return n;
+      });
+      this.setState({notes});
+    }, 0);
   }
 
   render() {
-    const {users} = this.state;
+    const {users, notes} = this.state;
 
     return (
       <main>
         <div className='piano-wrapper'>
           <div className='piano'>
-            {Keylayout.map((k, i) => <Key {...k} key={i} id={i} />)}
+            {notes.map((k, i) => <Key {...k} key={i} id={i} />)}
           </div>
         </div>
         <Statusbar users={users} />
