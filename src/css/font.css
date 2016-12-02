@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'vcr';
+  src: url('../assets/fonts/vcr/vcr.woff2') format('woff2'),
+       url('../assets/fonts/vcr/vcr.woff') format('woff'),
+       url('../assets/fonts/vcr/vcr.ttf') format('truetype'),
+       url('../assets/fonts/vcr/vcr.svg#vcr_osd_monoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

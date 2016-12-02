@@ -26,8 +26,11 @@ body {
 
 .logo {
   background: url('../assets/logo.png') no-repeat center center;
-  width: 100%;
-  height: 100%;
+  top: 50px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 442px;
+  height: 346px;
   position: absolute;
   z-index: 200;
 }
@@ -40,7 +43,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 15;
-  opacity: .40;
+  opacity: .2;
   pointer-events: none;
   overflow: hidden;
 }
@@ -50,20 +53,6 @@ body {
   height: 200px;
   position: relative;
   float: left;
-}
-
-.white {
-  background-color: #FFF;
-  border-right: 2px solid #000;
-}
-
-.black {
-  background-color: #000;
-  height: 100px;
-  color: #FFF;
-  width: 4%;
-  z-index: 10;
-  margin-left: -1%;
 }
 
 .black + .white {
@@ -89,17 +78,18 @@ body {
   justify-content: center;
   align-items: center;
   margin: 20px 0;
-  perspective: 600px;
+  perspective: 1000px;
 }
 
 .piano {
-  margin: -200px auto 100px;
-  height: 500px;
+  margin: 400px auto 0 auto;
+  height: 400px;
+  width: 90%;
   display: flex;
   flex-direction: row;
   transform-origin: bottom;
   transform-style: preserve-3d;
-  transform: rotateX(50deg);
+  transform: rotateX(40deg);
   animation: piano 0.6s 0.8s ease;
   animation-fill-mode: backwards;
   transition: transform 0.3s ease;
@@ -108,7 +98,7 @@ body {
   &::after {
     content: '';
     position: absolute;
-    background: darken(#444, 3%);
+    /* background: darken(#444, 3%); */
     background-clip: content-box;
     top: 0;
     left: 6px;
@@ -129,13 +119,13 @@ body {
 }
 
 .white {
+  /* top */
   background-color: #edefee;
   background-clip: content-box;
   margin: 0 2px;
   outline: none;
   transform-origin: top;
   transform-style: preserve-3d;
-  box-shadow: inset 2px 0 2px -1px fade(white, 80%), inset -2px 0 2px -1px fade(white, 80%), inset 10px -10px 10px -10px fade(#444, 30%), inset -10px 0 10px -10px fade(#444, 30%), inset 0 -200px 200px -200px fade(white, 70%), inset 0 0 0 1000px fade(#edefee, 50%);
   transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:active {
@@ -153,13 +143,11 @@ body {
   /* 3D front key effect */
   &::before,
   &::after {
+    /* height stukje */
     content: '';
-    background: #edefee;
+    background: #ccc;
     position: absolute;
-    height: 252px;
-    top: -250px;
     left: 0;
-    box-shadow: inset 0 200px 200px -200px fade(#444, 30%), inset 10px 10px 10px -10px fade(#444, 30%), inset -10px 0 10px -10px fade(#444, 30%), inset 0 0 0 1000px fade(#edefee, 50%);
     transition: background 0.3s ease;
   }
 
@@ -167,31 +155,29 @@ body {
   &::after {
     top: 100%;
     width: 100%;
-    height: 76px;
+    height: 36px; /* hoogte van de key */
     transform-origin: top;
     transform: rotateX(-90deg);
-    box-shadow: inset 0 -30px 50px -30px fade(black, 30%), inset 0 2px 1px #FFF, inset 0 4px fade(#000, 10%), inset 0 10px 10px -10px fade(#000, 40%);
   }
 }
 
 .black {
+  background-color: #000;
+  height: 120px;
   color: #444;
+  width: 4%;
+  z-index: 10;
+  margin-left: -1%;
   background: lighten(#444, 10%);
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
-  transform: translateZ(35px);
+  transform: translateZ(20px);
   transform-style: preserve-3d;
   transform-origin: top;
-  box-shadow: inset 0 -7px 5px, inset 4px 0 5px, inset -4px 0 5px, inset 0 0 0 1000px fade(lighten(#444, 10%), 50%);
-  z-index: 1;
   transition: background 0.3s ease, transform 0.3s ease;
 
   &:active {
-    transform: rotateX(-5deg) translateZ(35px);
-  }
-
-  &:hover {
-      background: darken(white, 50%);
+    transform: rotateX(-5deg) translateZ(20px);
   }
 
   &::before {
@@ -208,18 +194,25 @@ body {
     box-shadow: inset -50px 0 50px -50px black;
   }
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: -2px;
-    width: 100%;
-    border-bottom: 31px solid darken(#444, 2%);
-    border-left: 2px solid transparent;
-    border-right: 2px solid transparent;
-    height: 0;
-    transform-origin: top;
-    transform: rotateX(-90deg);
-    box-shadow: 0 7px 20px fade(black, 25%), 0 3px 5px -2px fade(white, 80%), 0 5px, 0 20px darken(#444, 2%), 0 40px darken(#444, 2%);
+&::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border-bottom: 60px solid black;
+  height: 0;
+  transform-origin: top;
+  transform: rotateX(-90deg);
+  box-shadow: 0 7px 20px fade(black, 25%),
+              0 3px 5px -2px fade(white, 80%),
+              0 5px,
+              0 20px darken(#444, 2%),
+              0 40px darken(#444, 2%);
+  }
+
+  &:nth-child(-n + 15)::before {
+      left: 99%;
+      transform: rotateY(87deg);
   }
 }
