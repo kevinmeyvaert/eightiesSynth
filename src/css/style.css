@@ -13,12 +13,10 @@ body {
   height: 100%;
   font-family: 'vcr_osd_monoregular', 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
-  margin: 2rem;
   background-color: #0a1a3a;
 }
 
 .container {
-  perspective: 600px;
   display: flex;
   justify-content: center;
   align-items: center;

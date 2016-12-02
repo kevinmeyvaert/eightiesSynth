@@ -4,6 +4,8 @@ import Tone from 'tone';
 import io from 'socket.io-client';
 
 import Key from '../components/key';
+import Statusbar from '../components/Statusbar';
+
 import Keylayout from '../const/keylayout';
 import Synthpresets from '../const/synthpresets';
 
@@ -108,12 +110,17 @@ class App extends Component {
   }
 
   render() {
+    const {users} = this.state;
+
     return (
-      <div className='piano-wrapper'>
-        <div className='piano'>
-          {Keylayout.map((k, i) => <Key {...k} key={i} id={i} />)}
+      <main>
+        <div className='piano-wrapper'>
+          <div className='piano'>
+            {Keylayout.map((k, i) => <Key {...k} key={i} id={i} />)}
+          </div>
         </div>
-      </div>
+        <Statusbar users={users} />
+      </main>
     );
   }
 }

@@ -81,14 +81,10 @@ body {
   font-family: 'vcr_osd_monoregular', 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 48px;
   font-size: 3rem;
-  margin: 32px;
-  margin: 2rem;
   background-color: #0a1a3a;
 }
 
 .container {
-  -webkit-perspective: 600px;
-          perspective: 600px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
