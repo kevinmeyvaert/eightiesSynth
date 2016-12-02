@@ -1,4 +1,5 @@
 @import 'reset';
+@import 'font';
 
 html {
   height: 100%;
@@ -6,11 +7,11 @@ html {
 }
 
 body {
-  background: url('../assets/bg.jpg') no-repeat center center;
+  background: url('/assets/bg.jpg') no-repeat center center;
   background-size: cover;
   width: 100%;
   height: 100%;
-  font-family: 'Helvetica neue', Helvetica, Arial, sans-serif;
+  font-family: 'vcr_osd_monoregular', 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
   margin: 2rem;
   background-color: #0A1A3A;
@@ -25,7 +26,7 @@ body {
 }
 
 .logo {
-  background: url('../assets/logo.png') no-repeat center center;
+  background: url('/assets/logo.png') no-repeat center center;
   top: 50px;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -215,4 +216,16 @@ body {
       left: 99%;
       transform: rotateY(87deg);
   }
+}
+
+
+/* CHAT */
+
+.chat-wrapper {
+  padding: 10px;
+}
+
+.header {
+  font-size: 2rem;
+  color: #778d1e;
 }
