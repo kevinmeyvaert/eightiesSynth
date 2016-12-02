@@ -14,7 +14,7 @@ body {
   font-family: 'vcr_osd_monoregular', 'Helvetica neue', Helvetica, Arial, sans-serif;
   font-size: 3rem;
   margin: 2rem;
-  background-color: #0A1A3A;
+  background-color: #0a1a3a;
 }
 
 .container {
@@ -26,7 +26,7 @@ body {
 }
 
 .logo {
-  background: url('/assets/logo.png') no-repeat center center;
+  background: url('/assets/logo.svg') no-repeat center center;
   top: 50px;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -60,18 +60,6 @@ body {
   margin-left: -3%;
 }
 
-/* CHAT */
-
-.chat-wrapper {
-  width: 300px;
-  height: 100%;
-  background-color: rgba(53, 9, 53, 0.7);
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 100;
-}
-
 /* PIANO */
 
 .piano-wrapper {
@@ -83,7 +71,7 @@ body {
 }
 
 .piano {
-  margin: 400px auto 0 auto;
+  margin: 400px auto 0;
   height: 400px;
   width: 90%;
   display: flex;
@@ -91,15 +79,14 @@ body {
   transform-origin: bottom;
   transform-style: preserve-3d;
   transform: rotateX(40deg);
-  animation: piano 0.6s 0.8s ease;
+  animation: piano .6s .8s ease;
   animation-fill-mode: backwards;
-  transition: transform 0.3s ease;
+  transition: transform .3s ease;
 
   &::before,
   &::after {
     content: '';
     position: absolute;
-    /* background: darken(#444, 3%); */
     background-clip: content-box;
     top: 0;
     left: 6px;
@@ -127,21 +114,22 @@ body {
   outline: none;
   transform-origin: top;
   transform-style: preserve-3d;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: background-color .3s ease, transform .3s ease;
 
   &:active {
     transform: rotateX(-7deg);
   }
 
   &:hover {
-      background-color: #FFF;
+    background-color: white;
 
-      &::before {
-          background: #FFF;
-      }
+    &::before {
+      background: white;
+    }
   }
 
   /* 3D front key effect */
+
   &::before,
   &::after {
     /* height stukje */
@@ -149,10 +137,11 @@ body {
     background: #ccc;
     position: absolute;
     left: 0;
-    transition: background 0.3s ease;
+    transition: background .3s ease;
   }
 
   /* 3D front key effect */
+
   &::after {
     top: 100%;
     width: 100%;
@@ -163,19 +152,18 @@ body {
 }
 
 .black {
-  background-color: #000;
   height: 120px;
   color: #444;
   width: 4%;
   z-index: 10;
   margin-left: -1%;
-  background: lighten(#444, 10%);
+  background-color: black;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   transform: translateZ(20px);
   transform-style: preserve-3d;
   transform-origin: top;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background .3s ease, transform .3s ease;
 
   &:active {
     transform: rotateX(-5deg) translateZ(20px);
@@ -195,37 +183,53 @@ body {
     box-shadow: inset -50px 0 50px -50px black;
   }
 
-&::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  border-bottom: 60px solid black;
-  height: 0;
-  transform-origin: top;
-  transform: rotateX(-90deg);
-  box-shadow: 0 7px 20px fade(black, 25%),
-              0 3px 5px -2px fade(white, 80%),
-              0 5px,
-              0 20px darken(#444, 2%),
-              0 40px darken(#444, 2%);
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border-bottom: 60px solid black;
+    height: 0;
+    transform-origin: top;
+    transform: rotateX(-90deg);
+    box-shadow:
+      0 7px 20px fade(black, 25%),
+      0 3px 5px -2px fade(white, 80%),
+      0 5px,
+      0 20px darken(#444, 2%),
+      0 40px darken(#444, 2%);
   }
 
   &:nth-child(-n + 15)::before {
-      left: 99%;
-      transform: rotateY(87deg);
+    left: 99%;
+    transform: rotateY(87deg);
   }
 }
 
+/* STATUSBAR */
+
+.statusbar {
+  background-color: rgba(54, 0, 48, .7);
+  padding: 2rem;
+  font-size: 1.5rem;
+  color: #778d1e;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 200;
+}
 
 /* CHAT */
 
-.chat-wrapper {
-  padding: 10px;
-}
-
-.header {
-  font-size: 2rem;
+/* .chat-inputfield {
+  display: flex;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  margin: 0 auto;
+  outline: none;
   color: #778d1e;
-}
+  border-bottom: 1px solid #778d1e;
+} */
