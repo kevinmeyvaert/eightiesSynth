@@ -1,9 +1,12 @@
+// @flow
 import React, {PropTypes} from 'react';
 
-const OnlineUser = ({user, tel}) => {
+const OnlineUser = ({user, tel}: {user: Object, tel: number}) => {
 
-  const userColor = {
-    backgroundColor: user.color,
+  const color: string = user.color;
+
+  const userColor: Object = {
+    backgroundColor: color,
     marginRight: `5px`,
     padding: `5px`
   };

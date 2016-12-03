@@ -1,10 +1,11 @@
+// @flow
 import React, {PropTypes} from 'react';
 
 import OnlineUsers from './OnlineUsers';
 
-const Statusbar = ({users}) => {
+const Statusbar = ({users}:{users: Object}) => {
 
-  const online = users.length;
+  const online: number = users.length;
 
   return (
     <section className='statusbar'>

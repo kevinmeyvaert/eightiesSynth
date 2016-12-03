@@ -1,6 +1,7 @@
+// @flow
 import React, {PropTypes} from 'react';
 
-const Key = ({note, color, number, played, playedby}) => {
+const Key = ({note, color, number, played, playedby}:{note: Object, color: string, number: number, played: boolean, playedby: string}) => {
 
   const userColor = {
     backgroundColor: playedby
