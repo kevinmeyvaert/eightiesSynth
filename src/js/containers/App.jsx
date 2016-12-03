@@ -4,13 +4,17 @@ import Tone from 'tone';
 import io from 'socket.io-client';
 
 import Key from '../components/key';
+import Statusbar from '../components/Statusbar';
+
 import Keylayout from '../const/keylayout';
 import Synthpresets from '../const/synthpresets';
 
 class App extends Component {
 
   state = {
-    users: []
+    users: [],
+    notes: Keylayout,
+    synth: {}
   }
 
   componentDidMount() {
@@ -34,12 +38,16 @@ class App extends Component {
   initMidiControls() {
     if (WebMidi.getInputByName(`Keystation Mini 32`)) {
       const input = WebMidi.getInputByName(`Keystation Mini 32`);
+
+      // initiate FM synth + fx
+      const reverb: Object = new Tone.JCReverb(0.7).connect(Tone.Master);
+      const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+      this.setState({synth});
+
       input.addListener(`noteon`, `all`, e => {
-        console.log(`Received 'noteon' message (${  e.note.name  }${e.note.octave  }).`);
         this.socket.emit(`noteplayed`, e);
       });
       input.addListener(`noteoff`, `all`, e => {
-        console.log(`Received 'noteoff' message (${  e.note.name  }${e.note.octave  }).`);
         this.socket.emit(`notereleased`, e);
       });
     } else {
@@ -71,49 +79,45 @@ class App extends Component {
   }
 
   handleWSPlayNote = ({note, socketId}) => {
-    const {users} = this.state;
+    let {notes} = this.state;
+    const {users, synth} = this.state;
+
+    // who played the note
     const userPlayed: Object = users.filter(u => u.socketId === socketId);
-    // show feedback
-    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = `${userPlayed[0].color}`;
 
-    // check what color the pressed key has
-    const colorKeyPressed: Object = Keylayout.filter(u => u.number === note.note.number);
-    // animate the pressed key
-    if (colorKeyPressed[0].color === `white`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-7deg)`;
-    } else if (colorKeyPressed[0].color === `black`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(-5deg) translateZ(20px)`;
-    }
-
-    // initiate FM synth + fx
-    const reverb: Object = new Tone.JCReverb(0.4).connect(Tone.Master);
-    const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+    notes = notes.map(n => {
+      if (n.number === note.note.number) n.played = true, n.playedby = userPlayed[0].color;
+      return n;
+    });
+    this.setState({notes});
 
     // trigger played note
     synth.triggerAttackRelease(`${note.note.name}${note.note.octave}`, `8n`);
-    console.log(`audio triggered by socket`);
+
   }
 
   handleWSReleaseNote = (note: Object) => {
-    // hide feedback
-    document.querySelector(`.nr-${note.note.number}`).style.backgroundColor = null;
-    // check what color the released key has
-    const colorKeyPressed: Object = Keylayout.filter(u => u.number === note.note.number);
-    // animate the released key
-    if (colorKeyPressed[0].color === `white`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg)`;
-    } if (colorKeyPressed[0].color === `black`) {
-      document.querySelector(`.nr-${note.note.number}`).style.transform = `rotateX(0deg) translateZ(20px)`;
-    }
+    let {notes} = this.state;
+
+    notes = notes.map(n => {
+      if (n.number === note.note.number) n.played = false, n.playedby = ``;
+      return n;
+    });
+    this.setState({notes});
   }
 
   render() {
+    const {users, notes} = this.state;
+
     return (
-      <div className='piano-wrapper'>
-        <div className='piano'>
-          {Keylayout.map((k, i) => <Key {...k} key={i} id={i} />)}
+      <main>
+        <div className='piano-wrapper'>
+          <div className='piano'>
+            {notes.map((k, i) => <Key {...k} key={i} id={i} />)}
+          </div>
         </div>
-      </div>
+        <Statusbar users={users} />
+      </main>
     );
   }
 }
