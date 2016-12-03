@@ -13,7 +13,8 @@ class App extends Component {
 
   state = {
     users: [],
-    notes: Keylayout
+    notes: Keylayout,
+    synth: {}
   }
 
   componentDidMount() {
@@ -37,12 +38,16 @@ class App extends Component {
   initMidiControls() {
     if (WebMidi.getInputByName(`Keystation Mini 32`)) {
       const input = WebMidi.getInputByName(`Keystation Mini 32`);
+
+      // initiate FM synth + fx
+      const reverb: Object = new Tone.JCReverb(0.7).connect(Tone.Master);
+      const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+      this.setState({synth});
+
       input.addListener(`noteon`, `all`, e => {
-        console.log(`Received 'noteon' message (${  e.note.name  }${e.note.octave  }).`);
         this.socket.emit(`noteplayed`, e);
       });
       input.addListener(`noteoff`, `all`, e => {
-        console.log(`Received 'noteoff' message (${  e.note.name  }${e.note.octave  }).`);
         this.socket.emit(`notereleased`, e);
       });
     } else {
@@ -75,7 +80,7 @@ class App extends Component {
 
   handleWSPlayNote = ({note, socketId}) => {
     let {notes} = this.state;
-    const {users} = this.state;
+    const {users, synth} = this.state;
 
     // who played the note
     const userPlayed: Object = users.filter(u => u.socketId === socketId);
@@ -86,25 +91,19 @@ class App extends Component {
     });
     this.setState({notes});
 
-    // initiate FM synth + fx
-    const reverb: Object = new Tone.JCReverb(0.4).connect(Tone.Master);
-    const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
-
     // trigger played note
     synth.triggerAttackRelease(`${note.note.name}${note.note.octave}`, `8n`);
-    console.log(`audio triggered by socket`);
+
   }
 
   handleWSReleaseNote = (note: Object) => {
     let {notes} = this.state;
 
-    setTimeout(() => {
-      notes = notes.map(n => {
-        if (n.number === note.note.number) n.played = false, n.playedby = ``;
-        return n;
-      });
-      this.setState({notes});
-    }, 0);
+    notes = notes.map(n => {
+      if (n.number === note.note.number) n.played = false, n.playedby = ``;
+      return n;
+    });
+    this.setState({notes});
   }
 
   render() {

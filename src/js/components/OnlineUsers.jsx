@@ -5,9 +5,9 @@ import OnlineUser from './OnlineUser';
 const OnlineUsers = ({users}) => {
 
   return (
-    <div className='onlineusers'>
+    <em className='onlineusers'>
       {users.map((u, i) => <OnlineUser user={u} key={i} tel={i} />)}
-    </div>
+    </em>
   );
 };
 

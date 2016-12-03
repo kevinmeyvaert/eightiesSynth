@@ -8,8 +8,6 @@ const OnlineUser = ({user, tel}) => {
     padding: `5px`
   };
 
-  console.log(user);
-
   return (
     <em style={userColor}>
       user{tel}{user.isMe === true ? ` (you)` : ``}
