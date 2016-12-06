@@ -243,3 +243,16 @@ body {
   color: #778d1e;
   border-bottom: 1px solid #778d1e;
 } */
+
+@media only screen and (max-device-width: 667px)
+    and (-webkit-device-pixel-ratio: 2) {
+  body {
+    background-image: none;
+  }
+  .logo {
+    display: none;
+  }
+  .grain {
+    display: none;
+  }
+}

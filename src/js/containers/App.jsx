@@ -17,14 +17,36 @@ class App extends Component {
     synth: {}
   }
 
+  isMobile = {
+    iOS: () => {
+      return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    }
+  }
+
   componentDidMount() {
     this.socket = io(`/`);
     this.socket.on(`init`, this.handleWSInit);
     this.socket.on(`leave`, this.handleWSLeave);
     this.socket.on(`join`, this.handleWSJoin);
+
+    this.checkDevice();
+
     this.socket.on(`playnote`, this.handleWSPlayNote);
     this.socket.on(`releasenote`, this.handleWSReleaseNote);
 
+    console.log(this.state);
+  }
+
+  checkDevice() {
+    if (this.isMobile.iOS()) {
+      this.initMobile();
+    }
+    if (!this.isMobile.iOS()) {
+      this.initDesktop();
+    }
+  }
+
+  initDesktop() {
     WebMidi.enable(err => {
       if (err) {
         console.log(`WebMidi could not be enabled.`, err);
@@ -32,6 +54,13 @@ class App extends Component {
         console.log(`WebMidi enabled!`);
         this.initMidiControls();
       }
+    });
+  }
+
+  initMobile() {
+    alert(`iOS device`);
+    document.addEventListener(`touchmove`, e => {
+      e.preventDefault();
     });
   }
 
@@ -106,17 +135,34 @@ class App extends Component {
     this.setState({notes});
   }
 
-  render() {
+  renderScreen() {
     const {users, notes} = this.state;
 
+    if (!this.isMobile.iOS()) {
+      return (
+        <div>
+          <div className='piano-wrapper'>
+            <div className='piano'>
+              {notes.map((k, i) => <Key {...k} key={i} id={i} />)}
+            </div>
+          </div>
+          <Statusbar users={users} />
+        </div>
+      );
+    }
+    if (this.isMobile.iOS()) {
+      return (
+        <div className='full-screen-mobile'>
+
+        </div>
+      );
+    }
+  }
+
+  render() {
     return (
       <main>
-        <div className='piano-wrapper'>
-          <div className='piano'>
-            {notes.map((k, i) => <Key {...k} key={i} id={i} />)}
-          </div>
-        </div>
-        <Statusbar users={users} />
+        {this.renderScreen()}
       </main>
     );
   }
