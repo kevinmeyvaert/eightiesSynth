@@ -28,6 +28,11 @@ module.exports.register = (server, options, next) => {
       //iedereen behalve zichtzelf : broadcast
     });
 
+    socket.on(`reverbchanged`, reverbInput => {
+      console.log(reverbInput);
+      io.emit(`changeReverb`, reverbInput);
+    });
+
     socket.on(`noteplayed`, note => {
       io.emit(`playnote`, {note, socketId});
     });

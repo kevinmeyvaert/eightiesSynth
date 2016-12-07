@@ -255,4 +255,7 @@ body {
   .grain {
     display: none;
   }
+  .inputslider{
+    transform: scale(2);
+  }
 }

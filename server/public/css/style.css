@@ -381,6 +381,10 @@ body {
   .grain {
     display: none;
   }
+  .inputslider{
+    -webkit-transform: scale(2);
+            transform: scale(2);
+  }
 }
 
 /*# sourceMappingURL=style.css.map*/

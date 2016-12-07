@@ -3,6 +3,7 @@ import WebMidi from 'webmidi';
 import Tone from 'tone';
 import io from 'socket.io-client';
 
+import Controls from '../components/controls';
 import Key from '../components/key';
 import Statusbar from '../components/Statusbar';
 
@@ -14,7 +15,8 @@ class App extends Component {
   state = {
     users: [],
     notes: Keylayout,
-    synth: {}
+    synth: {},
+    inputReverb: `0`
   }
 
   isMobile = {
@@ -31,8 +33,7 @@ class App extends Component {
 
     this.checkDevice();
 
-    this.socket.on(`playnote`, this.handleWSPlayNote);
-    this.socket.on(`releasenote`, this.handleWSReleaseNote);
+    this.socket.on(`changeReverb`, this.handleWSChangeReverb);
 
     console.log(this.state);
   }
@@ -55,23 +56,27 @@ class App extends Component {
         this.initMidiControls();
       }
     });
+    this.socket.on(`playnote`, this.handleWSPlayNote);
+    this.socket.on(`releasenote`, this.handleWSReleaseNote);
   }
 
   initMobile() {
-    alert(`iOS device`);
-    document.addEventListener(`touchmove`, e => {
-      e.preventDefault();
-    });
+    // document.addEventListener(`touchmove`, e => {
+    //   e.preventDefault();
+    // });
   }
 
   initMidiControls() {
     if (WebMidi.getInputByName(`Keystation Mini 32`)) {
       const input = WebMidi.getInputByName(`Keystation Mini 32`);
+      const {inputReverb} = this.state;
 
       // initiate FM synth + fx
-      const reverb: Object = new Tone.JCReverb(0.7).connect(Tone.Master);
+      const reverb: Object = new Tone.JCReverb(inputReverb).connect(Tone.Master);
       const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
-      this.setState({synth});
+
+      this.setState({synth, reverb});
+      console.log(this.state);
 
       input.addListener(`noteon`, `all`, e => {
         this.socket.emit(`noteplayed`, e);
@@ -82,6 +87,10 @@ class App extends Component {
     } else {
       console.log(`Keystation Mini 32 was not found! :(`);
     }
+  }
+
+  handleReverbInput = reverbInput => {
+    this.socket.emit(`reverbchanged`, reverbInput.target.value);
   }
 
   handleWSInit = (users: Object) => {
@@ -135,8 +144,25 @@ class App extends Component {
     this.setState({notes});
   }
 
+  handleWSChangeReverb = reverbInput => {
+    console.log(`reverb changed`);
+    let {inputReverb, reverb, synth} = this.state;
+
+    synth = null;
+    reverb = null;
+
+    inputReverb = reverbInput;
+
+    reverb = new Tone.JCReverb(inputReverb).connect(Tone.Master);
+    synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+
+    this.setState({synth, reverb, inputReverb});
+
+    console.log(this.state);
+  }
+
   renderScreen() {
-    const {users, notes} = this.state;
+    const {users, notes, inputReverb} = this.state;
 
     if (!this.isMobile.iOS()) {
       return (
@@ -153,7 +179,7 @@ class App extends Component {
     if (this.isMobile.iOS()) {
       return (
         <div className='full-screen-mobile'>
-
+          <Controls defaultReverb={inputReverb} onChangeReverb={this.handleReverbInput} />
         </div>
       );
     }
