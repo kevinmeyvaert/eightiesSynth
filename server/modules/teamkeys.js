@@ -29,8 +29,27 @@ module.exports.register = (server, options, next) => {
     });
 
     socket.on(`reverbchanged`, reverbInput => {
-      console.log(reverbInput);
       io.emit(`changeReverb`, reverbInput);
+    });
+
+    socket.on(`harmonicitychanged`, harmonicityInput => {
+      io.emit(`changeHarmonicity`, harmonicityInput);
+    });
+
+    socket.on(`attackchanged`, attackInput => {
+      io.emit(`changeAttack`, attackInput);
+    });
+
+    socket.on(`decaychanged`, decayInput => {
+      io.emit(`changeDecay`, decayInput);
+    });
+
+    socket.on(`sustainchanged`, sustainInput => {
+      io.emit(`changeSustain`, sustainInput);
+    });
+
+    socket.on(`releasechanged`, releaseInput => {
+      io.emit(`changeRelease`, releaseInput);
     });
 
     socket.on(`noteplayed`, note => {
