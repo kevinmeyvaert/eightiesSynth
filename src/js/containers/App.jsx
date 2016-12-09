@@ -4,7 +4,6 @@ import Tone from 'tone';
 import io from 'socket.io-client';
 
 import Controls from '../components/controls';
-import Slider from '../components/slider';
 import Key from '../components/key';
 import Statusbar from '../components/Statusbar';
 
