@@ -4,14 +4,14 @@ import React, {PropTypes} from 'react';
 const Controls = ({defaultReverb, onChangeReverb: handleReverbInput}) => {
   return (
     <div>
-      <p>Reverb</p>
+      <p>EDMify</p>
       <input
         className='inputslider'
         type='range'
         min='0'
-        max='1'
-        step='0.1'
-        defaultValue={defaultReverb}
+        max='0.9'
+        step='0.9'
+        value={defaultReverb}
         onChange={handleReverbInput} />
     </div>
   );

@@ -21,8 +21,8 @@ class App extends Component {
 
   isMobile = {
     iOS: () => {
-      return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    }
+      return navigator.userAgent.match(/Android|iPhone|iPad|iPod/i);
+    },
   }
 
   componentDidMount() {

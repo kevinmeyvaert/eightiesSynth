@@ -244,10 +244,10 @@ body {
   border-bottom: 1px solid #778d1e;
 } */
 
-@media only screen and (max-device-width: 667px)
-    and (-webkit-device-pixel-ratio: 2) {
+@media only screen and (max-device-width: 667px) {
   body {
-    background-image: none;
+    background: url('/assets/edmbg.jpg') no-repeat center center;
+    background-size: cover;
   }
   .logo {
     display: none;
