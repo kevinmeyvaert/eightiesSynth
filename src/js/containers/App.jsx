@@ -3,6 +3,7 @@ import WebMidi from 'webmidi';
 import Tone from 'tone';
 import io from 'socket.io-client';
 
+import Controls from '../components/controls';
 import Slider from '../components/slider';
 import Key from '../components/key';
 import Statusbar from '../components/Statusbar';
@@ -200,53 +201,14 @@ class App extends Component {
     if (this.isMobile.iOS()) {
       return (
         <div className='full-screen-mobile'>
-          <Slider
-            title={`Reverb`}
-            inputValue={userSlidersInput.reverb}
-            onChangeInput={this.handleReverbInput}
-            min={`0`}
-            max={`0.8`}
-            step={`0.1`}
-          />
-          <Slider
-            title={`harmonicity`}
-            inputValue={userSlidersInput.harmonicity}
-            onChangeInput={this.handleHarmonicityInput}
-            min={`1`}
-            max={`4`}
-            step={`1`}
-          />
-          <Slider
-            title={`Attack`}
-            inputValue={userSlidersInput.attack}
-            onChangeInput={this.handleAttackInput}
-            min={`0.01`}
-            max={`0.5`}
-            step={`0.01`}
-          />
-          <Slider
-            title={`Decay`}
-            inputValue={userSlidersInput.decay}
-            onChangeInput={this.handleDecayInput}
-            min={`0`}
-            max={`30`}
-            step={`0.5`}
-          />
-          <Slider
-            title={`Sustain`}
-            inputValue={userSlidersInput.sustain}
-            onChangeInput={this.handleSustainInput}
-            min={`1`}
-            max={`100`}
-            step={`0.5`}
-          />
-          <Slider
-            title={`Release`}
-            inputValue={userSlidersInput.release}
-            onChangeInput={this.handleReleaseInput}
-            min={`0.1`}
-            max={`1`}
-            step={`0.1`}
+          <Controls
+            userSlidersInput={userSlidersInput}
+            onChangeReverbInput={this.handleReverbInput}
+            onChangeHarmonicityInput={this.handleHarmonicityInput}
+            onChangeAttackInput={this.handleAttackInput}
+            onChangeDecayInput={this.handleDecayInput}
+            onChangeSustainInput={this.handleSustainInput}
+            onChangeReleaseInput={this.handleReleaseInput}
           />
         </div>
       );
