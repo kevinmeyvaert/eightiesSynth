@@ -3,7 +3,7 @@ import WebMidi from 'webmidi';
 import Tone from 'tone';
 import io from 'socket.io-client';
 
-import Controls from '../components/controls';
+import Reverb from '../components/reverb';
 import Key from '../components/key';
 import Statusbar from '../components/Statusbar';
 
@@ -35,7 +35,16 @@ class App extends Component {
 
     this.socket.on(`changeReverb`, this.handleWSChangeReverb);
 
+    const {inputReverb} = this.state;
+
+    // initiate FM synth + fx
+    const reverb: Object = new Tone.JCReverb(inputReverb).connect(Tone.Master);
+    const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
+
+    this.setState({synth, reverb});
     console.log(this.state);
+    console.log(synth.envelope.attack);
+    console.log(synth.envelope.decay);
   }
 
   checkDevice() {
@@ -69,14 +78,6 @@ class App extends Component {
   initMidiControls() {
     if (WebMidi.getInputByName(`Keystation Mini 32`)) {
       const input = WebMidi.getInputByName(`Keystation Mini 32`);
-      const {inputReverb} = this.state;
-
-      // initiate FM synth + fx
-      const reverb: Object = new Tone.JCReverb(inputReverb).connect(Tone.Master);
-      const synth: Object = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
-
-      this.setState({synth, reverb});
-      console.log(this.state);
 
       input.addListener(`noteon`, `all`, e => {
         this.socket.emit(`noteplayed`, e);
@@ -146,18 +147,13 @@ class App extends Component {
 
   handleWSChangeReverb = reverbInput => {
     console.log(`reverb changed`);
-    let {inputReverb, reverb, synth} = this.state;
-
-    synth = null;
-    reverb = null;
+    let {inputReverb} = this.state;
+    const {reverb} = this.state;
 
     inputReverb = reverbInput;
+    reverb.roomSize._gain.gain.value = Math.round(reverbInput * 10) / 10;
 
-    reverb = new Tone.JCReverb(inputReverb).connect(Tone.Master);
-    synth = new Tone.FMSynth(Synthpresets[0]).chain(reverb);
-
-    this.setState({synth, reverb, inputReverb});
-
+    this.setState({reverb, inputReverb});
     console.log(this.state);
   }
 
@@ -179,7 +175,7 @@ class App extends Component {
     if (this.isMobile.iOS()) {
       return (
         <div className='full-screen-mobile'>
-          <Controls defaultReverb={inputReverb} onChangeReverb={this.handleReverbInput} />
+          <Reverb reverbValue={inputReverb} onChangeReverb={this.handleReverbInput} />
         </div>
       );
     }
