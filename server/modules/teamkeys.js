@@ -6,6 +6,15 @@ module.exports.register = (server, options, next) => {
 
   let users = [];
 
+  const userInput = {
+    reverb: ``,
+    harmonicity: ``,
+    attack: ``,
+    decay: ``,
+    sustain: ``,
+    release: ``
+  };
+
   io.on(`connection`, socket => {
 
     const {id: socketId} = socket;
@@ -19,7 +28,7 @@ module.exports.register = (server, options, next) => {
     users.push(user);
     console.log(users);
 
-    socket.emit(`init`, users);
+    socket.emit(`init`, users, userInput);
     socket.broadcast.emit(`join`, user);
 
     socket.on(`disconnect`, () => {
@@ -29,27 +38,33 @@ module.exports.register = (server, options, next) => {
     });
 
     socket.on(`reverbchanged`, reverbInput => {
-      io.emit(`changeReverb`, reverbInput);
+      userInput.reverb = reverbInput;
+      io.emit(`changeSliders`, userInput);
     });
 
     socket.on(`harmonicitychanged`, harmonicityInput => {
-      io.emit(`changeHarmonicity`, harmonicityInput);
+      userInput.harmonicity = harmonicityInput;
+      io.emit(`changeSliders`, userInput);
     });
 
     socket.on(`attackchanged`, attackInput => {
-      io.emit(`changeAttack`, attackInput);
+      userInput.attack = attackInput;
+      io.emit(`changeSliders`, userInput);
     });
 
     socket.on(`decaychanged`, decayInput => {
-      io.emit(`changeDecay`, decayInput);
+      userInput.decay = decayInput;
+      io.emit(`changeSliders`, userInput);
     });
 
     socket.on(`sustainchanged`, sustainInput => {
-      io.emit(`changeSustain`, sustainInput);
+      userInput.sustain = sustainInput;
+      io.emit(`changeSliders`, userInput);
     });
 
     socket.on(`releasechanged`, releaseInput => {
-      io.emit(`changeRelease`, releaseInput);
+      userInput.release = releaseInput;
+      io.emit(`changeSliders`, userInput);
     });
 
     socket.on(`noteplayed`, note => {

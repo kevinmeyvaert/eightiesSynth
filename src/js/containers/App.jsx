@@ -16,12 +16,7 @@ class App extends Component {
     users: [],
     notes: Keylayout,
     synth: {},
-    inputReverb: `0`,
-    inputAttack: `0.1`,
-    inputDecay: `0`,
-    inputSustain: `5`,
-    inputRelease: `0.5`,
-    inputHarmonicity: `1`
+    userSlidersInput: {}
   }
 
   isMobile = {
@@ -38,12 +33,7 @@ class App extends Component {
 
     this.checkDevice();
 
-    this.socket.on(`changeReverb`, this.handleWSChangeReverb);
-    this.socket.on(`changeHarmonicity`, this.handleWSChangeHarmonicity);
-    this.socket.on(`changeAttack`, this.handleWSChangeAttack);
-    this.socket.on(`changeDecay`, this.handleWSChangeDecay);
-    this.socket.on(`changeSustain`, this.handleWSChangeSustain);
-    this.socket.on(`changeRelease`, this.handleWSChangeRelease);
+    this.socket.on(`changeSliders`, this.handleWSUserInput);
 
     const {inputReverb} = this.state;
 
@@ -121,15 +111,19 @@ class App extends Component {
     this.socket.emit(`releasechanged`, releaseInput.target.value);
   }
 
-  handleWSInit = (users: Object) => {
+  handleWSInit = (users: Object, userInput: Object) => {
     const {id: socketId} = this.socket;
+    let {userSlidersInput} = this.state;
 
     users = users.map(u => {
       if (u.socketId === socketId) u.isMe = true;
       return u;
     });
 
-    this.setState({users});
+    // sliders syncen met nodeserver
+    userSlidersInput = userInput;
+
+    this.setState({users, userSlidersInput});
   }
 
   handleWSJoin = (user: Object) => {
@@ -171,68 +165,25 @@ class App extends Component {
     this.setState({notes});
   }
 
-  handleWSChangeReverb = reverbInput => {
-    let {inputReverb} = this.state;
-    const {reverb} = this.state;
+  handleWSUserInput = userInput => {
+    const {synth, reverb} = this.state;
+    let {userSlidersInput} = this.state;
 
-    inputReverb = reverbInput;
-    reverb.roomSize._gain.gain.value = Math.round(reverbInput * 10) / 10;
+    reverb.roomSize._gain.gain.value = Math.round(userInput.reverb * 10) / 10;
+    synth.harmonicity._param.input.value = userInput.harmonicity;
+    synth.envelope.attack = userInput.attack;
+    synth.envelope.decay = userInput.decay;
+    synth.envelope.sustain = userInput.sustain;
+    synth.envelope.release = userInput.release;
 
-    this.setState({reverb, inputReverb});
-  }
+    // assign state values
+    userSlidersInput = userInput;
 
-  handleWSChangeHarmonicity = harmonicityInput => {
-    let {inputHarmonicity} = this.state;
-    const {synth} = this.state;
-
-    inputHarmonicity = harmonicityInput;
-    synth.harmonicity._param.input.value = harmonicityInput;
-
-    this.setState({synth, inputHarmonicity});
-  }
-
-  handleWSChangeAttack = attackInput => {
-    let {inputAttack} = this.state;
-    const {synth} = this.state;
-
-    inputAttack = attackInput;
-    synth.envelope.attack = attackInput;
-
-    this.setState({synth, inputAttack});
-  }
-
-  handleWSChangeDecay = decayInput => {
-    let {inputDecay} = this.state;
-    const {synth} = this.state;
-
-    inputDecay = decayInput;
-    synth.envelope.decay = decayInput;
-
-    this.setState({synth, inputDecay});
-  }
-
-  handleWSChangeSustain = sustainInput => {
-    let {inputSustain} = this.state;
-    const {synth} = this.state;
-
-    inputSustain = sustainInput;
-    synth.envelope.sustain = sustainInput;
-
-    this.setState({synth, inputSustain});
-  }
-
-  handleWSChangeRelease = releaseInput => {
-    let {inputRelease} = this.state;
-    const {synth} = this.state;
-
-    inputRelease = releaseInput;
-    synth.envelope.release = releaseInput;
-
-    this.setState({synth, inputRelease});
+    this.setState({reverb, synth, userSlidersInput});
   }
 
   renderScreen() {
-    const {users, notes, inputReverb, inputAttack, inputDecay, inputSustain, inputRelease, inputHarmonicity} = this.state;
+    const {users, notes, userSlidersInput} = this.state;
 
     if (!this.isMobile.iOS()) {
       return (
@@ -251,7 +202,7 @@ class App extends Component {
         <div className='full-screen-mobile'>
           <Slider
             title={`Reverb`}
-            inputValue={inputReverb}
+            inputValue={userSlidersInput.reverb}
             onChangeInput={this.handleReverbInput}
             min={`0`}
             max={`0.8`}
@@ -259,7 +210,7 @@ class App extends Component {
           />
           <Slider
             title={`harmonicity`}
-            inputValue={inputHarmonicity}
+            inputValue={userSlidersInput.harmonicity}
             onChangeInput={this.handleHarmonicityInput}
             min={`1`}
             max={`4`}
@@ -267,7 +218,7 @@ class App extends Component {
           />
           <Slider
             title={`Attack`}
-            inputValue={inputAttack}
+            inputValue={userSlidersInput.attack}
             onChangeInput={this.handleAttackInput}
             min={`0.01`}
             max={`0.5`}
@@ -275,7 +226,7 @@ class App extends Component {
           />
           <Slider
             title={`Decay`}
-            inputValue={inputDecay}
+            inputValue={userSlidersInput.decay}
             onChangeInput={this.handleDecayInput}
             min={`0`}
             max={`30`}
@@ -283,7 +234,7 @@ class App extends Component {
           />
           <Slider
             title={`Sustain`}
-            inputValue={inputSustain}
+            inputValue={userSlidersInput.sustain}
             onChangeInput={this.handleSustainInput}
             min={`1`}
             max={`100`}
@@ -291,7 +242,7 @@ class App extends Component {
           />
           <Slider
             title={`Release`}
-            inputValue={inputRelease}
+            inputValue={userSlidersInput.release}
             onChangeInput={this.handleReleaseInput}
             min={`0.1`}
             max={`1`}

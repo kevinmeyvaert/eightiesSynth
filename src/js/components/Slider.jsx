@@ -19,6 +19,9 @@ const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInp
 
 Slider.propTypes = {
   title: PropTypes.string,
+  min: PropTypes.string,
+  max: PropTypes.string,
+  step: PropTypes.string,
   inputValue: PropTypes.string,
   onChangeInput: PropTypes.func
 };
