@@ -1,6 +1,7 @@
 import React, {PropTypes} from 'react';
 
-const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInput}) => {
+const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInput}
+  :{title: string, min: string, max: string, step: string, inputValue: string}) => {
 
   return (
     <div>

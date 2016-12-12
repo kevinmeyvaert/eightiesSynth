@@ -8,7 +8,7 @@ const Key = ({note, color, number, played, playedby}:{note: Object, color: strin
     backgroundColor: playedby
   };
 
-  const playedCSS = classNames({
+  const playedCSS:Object = classNames({
     [`key ${color} nr-${number}`]: true,
     zwartplayed: played && color === `black`,
     witplayed: played && color === `white`
