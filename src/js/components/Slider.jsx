@@ -1,9 +1,10 @@
 import React, {PropTypes} from 'react';
 
-const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInput}) => {
+const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInput}
+  :{title: string, min: string, max: string, step: string, inputValue: string}) => {
 
   return (
-    <div>
+    <div className='slider'>
       <p>{title} <em>{inputValue}</em></p>
       <input
         className='inputslider'
@@ -19,6 +20,9 @@ const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInp
 
 Slider.propTypes = {
   title: PropTypes.string,
+  min: PropTypes.string,
+  max: PropTypes.string,
+  step: PropTypes.string,
   inputValue: PropTypes.string,
   onChangeInput: PropTypes.func
 };

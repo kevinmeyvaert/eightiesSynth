@@ -1,5 +1,6 @@
 // @flow
 import React, {PropTypes} from 'react';
+import classNames from 'classnames';
 
 const Key = ({note, color, number, played, playedby}:{note: Object, color: string, number: number, played: boolean, playedby: string}) => {
 
@@ -7,13 +8,14 @@ const Key = ({note, color, number, played, playedby}:{note: Object, color: strin
     backgroundColor: playedby
   };
 
+  const playedCSS:Object = classNames({
+    [`key ${color} nr-${number}`]: true,
+    zwartplayed: played && color === `black`,
+    witplayed: played && color === `white`
+  });
+
   return (
-    <div style={userColor} className={played & color === `black`
-      ? `key ${color} nr-${number} zwartplayed`
-      : `key ${color} nr-${number}`
-      && played & color === `white`
-      ? `key ${color} nr-${number} witplayed`
-      : `key ${color} nr-${number}`}>
+    <div style={userColor} className={playedCSS}>
       {note}
     </div>
   );

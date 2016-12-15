@@ -15,6 +15,7 @@
     "node": "6.7.0"
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "dotenv": "^2.0.0",
     "forever": "^0.15.2",
     "glob": "^7.1.1",
