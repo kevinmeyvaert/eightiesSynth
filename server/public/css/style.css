@@ -84,6 +84,25 @@ body {
   background-color: #0a1a3a;
 }
 
+.notification {
+  background-color: rgba(54, 0, 48, .7);
+  color: white;
+  font-size: 16px;
+  display: inline-block;
+  padding: 16px;
+  padding: 1rem;
+  position: absolute;
+  z-index: 1000;
+}
+
+a, a:visited {
+  color: white;
+}
+
+.hidden {
+ display: none;
+}
+
 .container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -237,11 +256,6 @@ body {
   /* 3D front key effect */
 }
 
-.white:active{
-  -webkit-transform: rotateX(-7deg);
-          transform: rotateX(-7deg);
-}
-
 .white:hover{
   background-color: white;
 }
@@ -293,11 +307,6 @@ body {
   transition: background .3s ease, -webkit-transform .3s ease;
   transition: background .3s ease, transform .3s ease;
   transition: background .3s ease, transform .3s ease, -webkit-transform .3s ease
-}
-
-.black:active{
-  -webkit-transform: rotateX(-5deg) translateZ(20px);
-          transform: rotateX(-5deg) translateZ(20px);
 }
 
 .black::before{

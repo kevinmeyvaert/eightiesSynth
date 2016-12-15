@@ -6,6 +6,7 @@ import io from 'socket.io-client';
 import Controls from '../components/controls';
 import Key from '../components/key';
 import Statusbar from '../components/Statusbar';
+import Notification from '../components/Notification';
 
 import Keylayout from '../const/keylayout';
 import Synthpresets from '../const/synthpresets';
@@ -15,14 +16,14 @@ class App extends Component {
   state = {
     users: [],
     notes: Keylayout,
+    midiConnected: false,
+    controlsBound: false,
     synth: {},
     userSlidersInput: {}
   }
 
   isMobile = {
-    iOS: () => {
-      return navigator.userAgent.match(/Android|iPhone|iPad|iPod/i);
-    },
+    check: () => navigator.userAgent.match(/Android|iPhone|iPad|iPod/i)
   }
 
   componentDidMount() {
@@ -45,10 +46,10 @@ class App extends Component {
   }
 
   checkDevice() {
-    if (this.isMobile.iOS()) {
+    if (this.isMobile.check()) {
       this.initMobile();
     }
-    if (!this.isMobile.iOS()) {
+    if (!this.isMobile.check()) {
       this.initDesktop();
     }
   }
@@ -72,19 +73,46 @@ class App extends Component {
     // });
   }
 
-  initMidiControls() {
+  checkKeystation() {
+    let {midiConnected, controlsBound} = this.state;
     if (WebMidi.getInputByName(`Keystation Mini 32`)) {
-      const input = WebMidi.getInputByName(`Keystation Mini 32`);
-
-      input.addListener(`noteon`, `all`, e => {
-        this.socket.emit(`noteplayed`, e);
-      });
-      input.addListener(`noteoff`, `all`, e => {
-        this.socket.emit(`notereleased`, e);
-      });
+      midiConnected = true;
     } else {
-      console.log(`Keystation Mini 32 was not found! :(`);
+      midiConnected = false;
+      controlsBound = false;
     }
+    this.setState({midiConnected, controlsBound});
+  }
+
+  checkMidiControls () {
+    const {midiConnected, controlsBound} = this.state;
+    if (midiConnected === true && controlsBound === false) {
+      this.bindMidiControls();
+    }
+  }
+
+  bindMidiControls() {
+    let {controlsBound} = this.state;
+    const input = WebMidi.getInputByName(`Keystation Mini 32`);
+    input.addListener(`noteon`, `all`, e => {
+      this.socket.emit(`noteplayed`, e);
+    });
+    input.addListener(`noteoff`, `all`, e => {
+      this.socket.emit(`notereleased`, e);
+    });
+    controlsBound = true;
+    this.setState({controlsBound});
+  }
+
+  initMidiControls() {
+    // initial check on load if device is connected
+    this.checkKeystation();
+    // permanent check every 1 sec if device is connected
+    setInterval(() => this.checkKeystation(), 1000);
+    // initial check on load to bind unbound midi controls
+    this.checkMidiControls();
+    // permanent check every 1 sec to bind unbound midi controls
+    setInterval(() => this.checkMidiControls(), 1000);
   }
 
   handleReverbInput = reverbInput => {
@@ -183,11 +211,12 @@ class App extends Component {
   }
 
   renderScreen() {
-    const {users, notes, userSlidersInput} = this.state;
+    const {users, notes, userSlidersInput, midiConnected} = this.state;
 
-    if (!this.isMobile.iOS()) {
+    if (!this.isMobile.check()) {
       return (
         <div>
+          <Notification midiConnected={midiConnected} />
           <div className='piano-wrapper'>
             <div className='piano'>
               {notes.map((k, i) => <Key {...k} key={i} id={i} />)}
@@ -197,7 +226,7 @@ class App extends Component {
         </div>
       );
     }
-    if (this.isMobile.iOS()) {
+    if (this.isMobile.check()) {
       return (
         <div className='full-screen-mobile'>
           <Controls

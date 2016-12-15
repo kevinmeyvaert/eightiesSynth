@@ -16,6 +16,24 @@ body {
   background-color: #0a1a3a;
 }
 
+.notification {
+  background-color: rgba(54, 0, 48, .7);
+  color: white;
+  font-size: 16px;
+  display: inline-block;
+  padding: 1rem;
+  position: absolute;
+  z-index: 1000;
+}
+
+a, a:visited {
+  color: white;
+}
+
+.hidden {
+ display: none;
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -126,10 +144,6 @@ body {
   transform-style: preserve-3d;
   transition: background-color .3s ease, transform .3s ease;
 
-  &:active {
-    transform: rotateX(-7deg);
-  }
-
   &:hover {
     background-color: white;
 
@@ -174,10 +188,6 @@ body {
   transform-style: preserve-3d;
   transform-origin: top;
   transition: background .3s ease, transform .3s ease;
-
-  &:active {
-    transform: rotateX(-5deg) translateZ(20px);
-  }
 
   &::before {
     content: '';
