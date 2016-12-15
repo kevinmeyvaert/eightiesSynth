@@ -34,25 +34,25 @@ const Controls = ({
         title={`Attack`}
         inputValue={userSlidersInput.attack}
         onChangeInput={handleAttackInput}
-        min={`0.01`}
-        max={`0.5`}
+        min={`0.1`}
+        max={`1`}
         step={`0.01`}
       />
       <Slider
         title={`Decay`}
         inputValue={userSlidersInput.decay}
         onChangeInput={handleDecayInput}
-        min={`0`}
-        max={`30`}
-        step={`0.5`}
+        min={`0.1`}
+        max={`1`}
+        step={`0.01`}
       />
       <Slider
         title={`Sustain`}
         inputValue={userSlidersInput.sustain}
         onChangeInput={handleSustainInput}
-        min={`1`}
-        max={`100`}
-        step={`0.5`}
+        min={`0.1`}
+        max={`1`}
+        step={`0.01`}
       />
       <Slider
         title={`Release`}
@@ -60,7 +60,7 @@ const Controls = ({
         onChangeInput={handleReleaseInput}
         min={`0.1`}
         max={`1`}
-        step={`0.1`}
+        step={`0.01`}
       />
     </div>
   );

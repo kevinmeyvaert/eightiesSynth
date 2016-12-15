@@ -7,12 +7,12 @@ module.exports.register = (server, options, next) => {
   let users = [];
 
   const userInput = {
-    reverb: ``,
-    harmonicity: ``,
-    attack: ``,
-    decay: ``,
-    sustain: ``,
-    release: ``
+    reverb: `0`,
+    harmonicity: `1`,
+    attack: `0.1`,
+    decay: `0.1`,
+    sustain: `0.1`,
+    release: `0.1`
   };
 
   io.on(`connection`, socket => {

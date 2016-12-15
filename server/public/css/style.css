@@ -100,7 +100,7 @@ a, a:visited {
 }
 
 .hidden {
- display: none;
+  display: none;
 }
 
 .container {
@@ -151,16 +151,6 @@ a, a:visited {
   height: 200px;
   position: relative;
   float: left;
-}
-
-.witplayed {
-  -webkit-transform: rotateX(-7deg);
-          transform: rotateX(-7deg);
-}
-
-.zwartplayed {
-  -webkit-transform: rotateX(-5deg) translateZ(20px) !important;
-          transform: rotateX(-5deg) translateZ(20px) !important;
 }
 
 .black + .white {
@@ -366,31 +356,32 @@ a, a:visited {
   z-index: 200;
 }
 
-/* CHAT */
+.witplayed {
+  -webkit-transform: rotateX(-7deg);
+          transform: rotateX(-7deg);
+}
 
-/* .chat-inputfield {
-  display: flex;
-  justify-content: space-between;
-  background: none;
-  border: none;
-  margin: 0 auto;
-  outline: none;
-  color: #778d1e;
-  border-bottom: 1px solid #778d1e;
-} */
+.zwartplayed {
+  -webkit-transform: rotateX(-5deg) translateZ(20px);
+          transform: rotateX(-5deg) translateZ(20px);
+}
 
 @media only screen and (max-device-width: 667px) {
+
   body {
     background: url('/assets/edmbg.jpg') no-repeat center center;
     background-size: cover;
   }
+
   .logo {
     display: none;
   }
+
   .grain {
     display: none;
   }
-  .inputslider{
+
+  .inputslider {
     -webkit-transform: scale(2);
             transform: scale(2);
   }
