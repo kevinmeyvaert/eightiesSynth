@@ -16,6 +16,21 @@ body {
   background-color: #0a1a3a;
 }
 
+.full-screen-mobile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.slider {
+  height: 14vh;
+  padding: 1rem 4rem;
+  margin-bottom: 1rem;
+  background-color: rgba(54, 0, 48, .7);
+  color: white;
+}
+
 .notification {
   background-color: rgba(54, 0, 48, .7);
   color: white;
@@ -244,8 +259,10 @@ a, a:visited {
 @media only screen and (max-device-width: 667px) {
 
   body {
-    background: url('/assets/edmbg.jpg') no-repeat center center;
-    background-size: cover;
+    background: none;
+    background-color: #0a1a3a;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .logo {

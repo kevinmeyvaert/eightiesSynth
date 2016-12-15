@@ -4,7 +4,7 @@ const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInp
   :{title: string, min: string, max: string, step: string, inputValue: string}) => {
 
   return (
-    <div>
+    <div className='slider'>
       <p>{title} <em>{inputValue}</em></p>
       <input
         className='inputslider'

@@ -180,7 +180,6 @@ class App extends Component {
     this.setState({notes});
     // trigger played note
     synth.triggerAttackRelease(`${note.note.name}${note.note.octave}`, `8n`);
-    console.log(this.state);
   }
 
   handleWSReleaseNote = (note: Object) => {
