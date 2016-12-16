@@ -35,6 +35,7 @@ class App extends Component {
     this.checkDevice();
 
     this.socket.on(`changeSliders`, this.handleWSUserInput);
+    this.socket.on(`appendPreset`, this.handleWSUserInput);
 
     const {inputReverb} = this.state;
 
@@ -47,9 +48,13 @@ class App extends Component {
 
   checkDevice() {
     if (this.isMobile.check()) {
+      const isMobile = true;
+      this.socket.emit(`newuser`, isMobile);
       this.initMobile();
     }
     if (!this.isMobile.check()) {
+      const isMobile = false;
+      this.socket.emit(`newuser`, isMobile);
       this.initDesktop();
     }
   }
@@ -113,6 +118,19 @@ class App extends Component {
     this.checkMidiControls();
     // permanent check every 1 sec to bind unbound midi controls
     setInterval(() => this.checkMidiControls(), 1000);
+  }
+
+  handleSetPreset = () => {
+    const {userSlidersInput} = this.state;
+    localStorage.setItem(`userPreset`, JSON.stringify(userSlidersInput));
+  }
+
+  handleGetPreset = () => {
+    let {userSlidersInput} = this.state;
+    const userPreset = localStorage.getItem(`userPreset`);
+    userSlidersInput = JSON.parse(userPreset);
+    this.setState({userSlidersInput});
+    this.socket.emit(`pushpreset`, userSlidersInput);
   }
 
   handleReverbInput = reverbInput => {
@@ -215,7 +233,19 @@ class App extends Component {
     if (!this.isMobile.check()) {
       return (
         <div>
-          <Notification midiConnected={midiConnected} />
+          <div className='notes'>
+            <Notification midiConnected={midiConnected} />
+            <div className='notification right'>
+              <p>
+                A webmidi/tonejs/socketio/react experiment.<br />
+                By <a href='https://github.com/kevinmeyvaert' target='_blank'>Kevin Meyvaert</a> & <a href='https://github.com/AnthonyMagnus' target='_blank'>Anthony Magnus</a> for <a href='http://devine.be' target='_blank'>Devine</a>.
+              </p>
+              <p className='howto'>
+                Visit this site on mobile to adjust synth envelope and effects.<br />
+                All adjustments are shared with all users in realtime!
+              </p>
+            </div>
+          </div>
           <div className='piano-wrapper'>
             <div className='piano'>
               {notes.map((k, i) => <Key {...k} key={i} id={i} />)}
@@ -236,6 +266,8 @@ class App extends Component {
             onChangeDecayInput={this.handleDecayInput}
             onChangeSustainInput={this.handleSustainInput}
             onChangeReleaseInput={this.handleReleaseInput}
+            onSetPreset={this.handleSetPreset}
+            onGetPreset={this.handleGetPreset}
           />
         </div>
       );

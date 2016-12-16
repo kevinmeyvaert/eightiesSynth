@@ -9,7 +9,9 @@ const Controls = ({
   onChangeAttackInput: handleAttackInput,
   onChangeDecayInput: handleDecayInput,
   onChangeSustainInput: handleSustainInput,
-  onChangeReleaseInput: handleReleaseInput
+  onChangeReleaseInput: handleReleaseInput,
+  onGetPreset: handleGetPreset,
+  onSetPreset: handleSetPreset
 }) => {
 
   return (
@@ -62,6 +64,10 @@ const Controls = ({
         max={`1`}
         step={`0.01`}
       />
+      <div className='storage'>
+        <button onClick={handleSetPreset} className='save'><img src='/assets/save.svg' className='icon' /></button>
+        <button onClick={handleGetPreset} className='load'><img src='/assets/load.svg' className='icon' /></button>
+      </div>
     </div>
   );
 };
@@ -73,7 +79,9 @@ Controls.propTypes = {
   onChangeAttackInput: PropTypes.func,
   onChangeDecayInput: PropTypes.func,
   onChangeSustainInput: PropTypes.func,
-  onChangeReleaseInput: PropTypes.func
+  onChangeReleaseInput: PropTypes.func,
+  onSetPreset: PropTypes.func,
+  onGetPreset: PropTypes.func
 };
 
 export default Controls;

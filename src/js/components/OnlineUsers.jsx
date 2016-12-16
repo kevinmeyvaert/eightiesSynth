@@ -7,7 +7,7 @@ const OnlineUsers = ({users}:{users: Object}) => {
 
   return (
     <em className='onlineusers'>
-      {users.map((u: Object, i: number) => <OnlineUser user={u} key={i} tel={i} />)}
+      {users.map((u: Object, i: number) => <OnlineUser user={u} key={i} />)}
     </em>
   );
 };

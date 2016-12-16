@@ -13,7 +13,7 @@ const Slider = ({title, min, max, step, inputValue, onChangeInput: handleUserInp
         max={max}
         step={step}
         value={inputValue}
-        onChange={handleUserInput} />
+        onInput={handleUserInput} />
     </div>
   );
 };
