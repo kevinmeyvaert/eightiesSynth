@@ -16,6 +16,33 @@ body {
   background-color: #0a1a3a;
 }
 
+.icon {
+  width: 3.2rem;
+}
+
+.icon-inp {
+  width: 2.5rem;
+  transform: rotate(90deg);
+}
+
+.bolletje {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  padding: 1rem;
+  border-radius: 50%;
+}
+
+.subbolletje {
+  padding: 1rem;
+  position: absolute;
+  margin-top: -2rem;
+  color: white;
+}
+
 .full-screen-mobile {
   display: flex;
   flex-direction: column;
@@ -24,10 +51,21 @@ body {
 }
 
 .slider {
-  height: 14vh;
   padding: 1rem 4rem;
   margin-bottom: 1rem;
   background-color: rgba(54, 0, 48, .7);
+  color: white;
+}
+
+.storage {
+  display: flex;
+  justify-content: center;
+}
+
+.save, .load {
+  padding: 1rem 4rem;
+  background-color: rgba(54, 0, 48, .7);
+  font-size: 16px;
   color: white;
 }
 
@@ -57,7 +95,8 @@ a, a:visited {
 }
 
 .onlineusers {
-  display: inline;
+  display: flex;
+  flex-direction: row;
 }
 
 .logo {
@@ -69,19 +108,7 @@ a, a:visited {
   height: 346px;
   position: absolute;
   z-index: 200;
-}
-
-.grain {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 15;
-  opacity: .2;
-  pointer-events: none;
-  overflow: hidden;
+  margin-right: 1rem;
 }
 
 .key {

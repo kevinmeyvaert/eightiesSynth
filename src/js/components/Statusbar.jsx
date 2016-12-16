@@ -9,7 +9,7 @@ const Statusbar = ({users}:{users: Object}) => {
 
   return (
     <section className='statusbar'>
-      <p className='left'>{online} {online > 1 ? `users` : `user`} online | <OnlineUsers users={users} /></p>
+      <OnlineUsers users={users} />
     </section>
   );
 };

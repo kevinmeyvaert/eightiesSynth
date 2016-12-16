@@ -6,7 +6,7 @@ module.exports.register = (server, options, next) => {
 
   let users = [];
 
-  const userInput = {
+  let userInput = {
     reverb: `0`,
     harmonicity: `1`,
     attack: `0.1`,
@@ -29,12 +29,22 @@ module.exports.register = (server, options, next) => {
     console.log(users);
 
     socket.emit(`init`, users, userInput);
-    socket.broadcast.emit(`join`, user);
+
+    socket.on(`newuser`, isMobile => {
+      user.isMobile = isMobile;
+      socket.broadcast.emit(`join`, user);
+    });
+
 
     socket.on(`disconnect`, () => {
       users = users.filter(u => u.socketId !== socketId);
       socket.broadcast.emit(`leave`, socketId);
       //iedereen behalve zichtzelf : broadcast
+    });
+
+    socket.on(`pushpreset`, userSlidersInput => {
+      userInput = userSlidersInput;
+      io.emit(`appendPreset`, userInput);
     });
 
     socket.on(`reverbchanged`, reverbInput => {
