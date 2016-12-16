@@ -62,11 +62,25 @@ body {
   justify-content: center;
 }
 
+.colorborder {
+  height: 1rem;
+  width: 100%;
+}
+
+.right {
+  right: 2rem;
+  line-height: 1.4;
+}
+
 .save, .load {
   padding: 1rem 4rem;
   background-color: rgba(54, 0, 48, .7);
   font-size: 16px;
   color: white;
+
+  &:active {
+    background-color: yellow;
+  }
 }
 
 .notification {
@@ -80,7 +94,15 @@ body {
 }
 
 a, a:visited {
-  color: white;
+  color: #02feff;
+}
+
+.notification p {
+  margin-bottom: 1rem;
+}
+
+.howto {
+  font-size: 1.2rem;
 }
 
 .hidden {

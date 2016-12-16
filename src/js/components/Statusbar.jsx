@@ -5,8 +5,6 @@ import OnlineUsers from './OnlineUsers';
 
 const Statusbar = ({users}:{users: Object}) => {
 
-  const online: number = users.length;
-
   return (
     <section className='statusbar'>
       <OnlineUsers users={users} />

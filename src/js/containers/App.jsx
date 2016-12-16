@@ -123,8 +123,6 @@ class App extends Component {
   handleSetPreset = () => {
     const {userSlidersInput} = this.state;
     localStorage.setItem(`userPreset`, JSON.stringify(userSlidersInput));
-    console.log(`set`);
-    console.log(localStorage);
   }
 
   handleGetPreset = () => {
@@ -133,7 +131,6 @@ class App extends Component {
     userSlidersInput = JSON.parse(userPreset);
     this.setState({userSlidersInput});
     this.socket.emit(`pushpreset`, userSlidersInput);
-    console.log(`get`);
   }
 
   handleReverbInput = reverbInput => {
@@ -236,7 +233,19 @@ class App extends Component {
     if (!this.isMobile.check()) {
       return (
         <div>
-          <Notification midiConnected={midiConnected} />
+          <div className='notes'>
+            <Notification midiConnected={midiConnected} />
+            <div className='notification right'>
+              <p>
+                A webmidi/tonejs/socketio/react experiment.<br />
+                By <a href='https://github.com/kevinmeyvaert' target='_blank'>Kevin Meyvaert</a> & <a href='https://github.com/AnthonyMagnus' target='_blank'>Anthony Magnus</a> for <a href='http://devine.be' target='_blank'>Devine</a>.
+              </p>
+              <p className='howto'>
+                Visit this site on mobile to adjust synth envelope and effects.<br />
+                All adjustments are shared with all users in realtime!
+              </p>
+            </div>
+          </div>
           <div className='piano-wrapper'>
             <div className='piano'>
               {notes.map((k, i) => <Key {...k} key={i} id={i} />)}
