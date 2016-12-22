@@ -1,3 +1,12 @@
+type userInputType = {
+  reverb: number,
+  harmonicity: number,
+  decay: number,
+  sustain: number,
+  release: number,
+  attack: number
+};
+
 import React, {Component} from 'react';
 import WebMidi from 'webmidi';
 import Tone from 'tone';
@@ -37,7 +46,7 @@ class App extends Component {
     this.socket.on(`changeSliders`, this.handleWSUserInput);
     this.socket.on(`appendPreset`, this.handleWSUserInput);
 
-    const {inputReverb} = this.state;
+    const {inputReverb}:{inputReverb: Object} = this.state;
 
     // initiate FM synth + fx
     const reverb: Object = new Tone.JCReverb(inputReverb).connect(Tone.Master);
@@ -98,7 +107,7 @@ class App extends Component {
 
   bindMidiControls() {
     let {controlsBound} = this.state;
-    const input = WebMidi.getInputByName(`Keystation Mini 32`);
+    const input: Object = WebMidi.getInputByName(`Keystation Mini 32`);
     input.addListener(`noteon`, `all`, e => {
       this.socket.emit(`noteplayed`, e);
     });
@@ -133,27 +142,27 @@ class App extends Component {
     this.socket.emit(`pushpreset`, userSlidersInput);
   }
 
-  handleReverbInput = reverbInput => {
+  handleReverbInput = (reverbInput: string) => {
     this.socket.emit(`reverbchanged`, reverbInput.target.value);
   }
 
-  handleHarmonicityInput = harmonicityInput => {
+  handleHarmonicityInput = (harmonicityInput: string) => {
     this.socket.emit(`harmonicitychanged`, harmonicityInput.target.value);
   }
 
-  handleAttackInput = attackInput => {
+  handleAttackInput = (attackInput: string) => {
     this.socket.emit(`attackchanged`, attackInput.target.value);
   }
 
-  handleDecayInput = decayInput => {
+  handleDecayInput = (decayInput: string) => {
     this.socket.emit(`decaychanged`, decayInput.target.value);
   }
 
-  handleSustainInput = sustainInput => {
+  handleSustainInput = (sustainInput: string) => {
     this.socket.emit(`sustainchanged`, sustainInput.target.value);
   }
 
-  handleReleaseInput = releaseInput => {
+  handleReleaseInput = (releaseInput: string) => {
     this.socket.emit(`releasechanged`, releaseInput.target.value);
   }
 
@@ -210,13 +219,13 @@ class App extends Component {
     this.setState({notes});
   }
 
-  handleWSUserInput = userInput => {
+  handleWSUserInput = (userInput: userInputType) => {
     const {synth, reverb} = this.state;
-    let {userSlidersInput} = this.state;
+    let {userSlidersInput}:{userSlidersInput: Object} = this.state;
 
     reverb.roomSize._gain.gain.value = Math.round(userInput.reverb * 10) / 10;
     synth.harmonicity._param.input.value = userInput.harmonicity;
-    synth.envelope.attack = userInput.attack;
+    synth.envelope.attack = (userInput.attack: string);
     synth.envelope.decay = userInput.decay;
     synth.envelope.sustain = userInput.sustain;
     synth.envelope.release = userInput.release;
@@ -228,7 +237,9 @@ class App extends Component {
   }
 
   renderScreen() {
-    const {users, notes, userSlidersInput, midiConnected} = this.state;
+    const {users, notes, userSlidersInput, midiConnected}
+    :{users: Object, notes: Object, userSlidersInput:Object, midiConnected: boolean}
+    = this.state;
 
     if (!this.isMobile.check()) {
       return (

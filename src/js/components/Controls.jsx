@@ -1,3 +1,13 @@
+// @flow
+type userInputType = {
+  reverb: number,
+  harmonicity: number,
+  decay: number,
+  sustain: number,
+  release: number,
+  attack: number
+};
+
 import React, {PropTypes} from 'react';
 
 import Slider from './Slider';
@@ -12,7 +22,7 @@ const Controls = ({
   onChangeReleaseInput: handleReleaseInput,
   onGetPreset: handleGetPreset,
   onSetPreset: handleSetPreset
-}) => {
+}:{userSlidersInput: userInputType}) => {
 
   return (
     <div className='full-screen-mobile'>
